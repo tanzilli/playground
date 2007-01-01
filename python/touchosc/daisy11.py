@@ -1,10 +1,8 @@
-import ablib
+from ablib import Daisy11
 from OSC import OSCServer,OSCClient, OSCMessage
-import sys
 from time import sleep
+import sys
 import types
-
-rele = ablib.Daisy4('D12','DIP1')
 
 # Daisy connector on which is wired the
 # Daisy11 module
@@ -12,16 +10,15 @@ connector = 'D11'
  
 # Create a list istances for all the leds
 led = [
-	ablib.Daisy11(connector,'L1'),
-	ablib.Daisy11(connector,'L2'),
-	ablib.Daisy11(connector,'L3'),
-	ablib.Daisy11(connector,'L4'),
-	ablib.Daisy11(connector,'L5'),
-	ablib.Daisy11(connector,'L6'),
-	ablib.Daisy11(connector,'L7'),
-	ablib.Daisy11(connector,'L8')
-	]
-
+	Daisy11(connector,'L1'),
+	Daisy11(connector,'L2'),
+	Daisy11(connector,'L3'),
+	Daisy11(connector,'L4'),
+	Daisy11(connector,'L5'),
+	Daisy11(connector,'L6'),
+	Daisy11(connector,'L7'),
+	Daisy11(connector,'L8')
+]
 
 server = OSCServer( ("0.0.0.0", 8000) )
 client = OSCClient()
@@ -31,12 +28,6 @@ def handle_timeout(self):
 	print ("Timeout")
 
 server.handle_timeout = types.MethodType(handle_timeout, server)
-
-def rele_callback(path, tags, args, source):
-	if args[0]:
-		rele.on()
-	else:
-		rele.off()
 
 def fader_callback(path, tags, args, source):
 	print ("path", path) 
