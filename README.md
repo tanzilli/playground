@@ -12,6 +12,9 @@ To install and run these examples on your Acme Board follow this tutorial:
 
 #Directory contents
 
-* **\ablib** Python module to easily manage the I/O lines and Daisy modules
 * **\python** Examples in Python
+* **\c** Examples in C
+* **\nodejs** Examples in nodejs
+* **\driver** Examples od Linux driver
+* **\sh** Examples in bash
 * **\test** Factory test utilities

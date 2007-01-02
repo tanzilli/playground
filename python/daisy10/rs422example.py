@@ -1,6 +1,6 @@
-import ablib
+from ablib import Daisy10
 
-d10_module=ablib.Daisy10(port="D10",baudrate=9600,timeout=10)
+d10_module=Daisy10("D10",baudrate=9600,timeout=10)
 d10_module.mode("RS422")
 
 d10_module.flushInput()

@@ -4,11 +4,9 @@
 import serial
 import time
 
-# DAISY-13 plugged on D1 connector
-# serialport = "/dev/ttyS2"
+# DAISY-13 plugged on Terra D10 connector
+serialport = "/dev/ttyS4"
 
-# Telit GM862 on FOXGM board
-serialport = "/dev/ttyS1"
 
 # Insert here the destination number
 send_to = "+393460624344"
@@ -24,6 +22,12 @@ ser = serial.Serial(
 )
 ser.flushOutput()
 ser.flushInput()
+
+ser.write("AT\r")
+print ser.readlines()
+
+ser.write("AT\r")
+print ser.readlines()
 
 ser.write("ATH\r")
 print ser.readlines()

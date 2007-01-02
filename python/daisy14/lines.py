@@ -1,7 +1,7 @@
-import ablib
-import time
+from ablib import Daisy14
+from time import sleep
 
-lcd = ablib.Daisy14(0,0x20)
+lcd = Daisy14(0,0x20)
 lcd.setcurpos(0,0)
 lcd.putstring("Line 0")
 lcd.setcurpos(0,1)

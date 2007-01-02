@@ -1,13 +1,13 @@
-import ablib
-import time
+from ablib import Daisy8
+from time import sleep
 
-IN0 = ablib.Daisy8(connector='D11',id='IN0')
-IN1 = ablib.Daisy8(connector='D11',id='IN1')
+IN0 = Daisy8('D11','IN0')
+IN1 = Daisy8('D11','IN1')
  
 while True:
 	print "IN0=", IN0.get()
-	time.sleep(1)
+	sleep(1)
 	print "IN1=", IN1.get()
-	time.sleep(1)
+	sleep(1)
 
 

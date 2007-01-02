@@ -1,32 +1,32 @@
-import ablib
-import time
+from ablib import Daisy8
+from time import sleep
 
-RL0_A = ablib.Daisy8(connector='D11',id='RL0',position='first')
-RL1_A = ablib.Daisy8(connector='D11',id='RL1',position='first')
-RL0_B = ablib.Daisy8(connector='D11',id='RL0',position='second')
-RL1_B = ablib.Daisy8(connector='D11',id='RL1',position='second')
+RL0_A = Daisy8('D11','RL0','first')
+RL1_A = Daisy8('D11','RL1','first')
+RL0_B = Daisy8('D11','RL0','second')
+RL1_B = Daisy8('D11','RL1','second')
  
 while True:
 	RL0_A.on()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL1_A.on()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL0_B.on()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL1_B.on()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL0_A.off()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL1_A.off()
-	time.sleep(0.5)
+	sleep(0.5)
 
  	RL0_B.off()
-	time.sleep(0.5)
+	sleep(0.5)
 
 	RL1_B.off()
-	time.sleep(0.5)
+	sleep(0.5)
