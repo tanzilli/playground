@@ -252,6 +252,20 @@ class Pin():
 		return(self.kernel_id)
 
 
+	def on(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,1)
+		else:
+			pass
+
+		
+	def off(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,0)
+		else:
+			pass
+
+
 class Daisy4():
 
 	"""
