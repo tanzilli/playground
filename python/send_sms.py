@@ -1,13 +1,10 @@
-#!/usr/bin/python 
-# Send a SMS example
-# Plug the Daisy-13 board on D1
+# Send a SMS using a Daisy13 module wired on D1 connector
 
 import serial
 import time
 
-# Destination number
-# Example: +39338123456
-send_to = "destination number]"
+# Insert here the destination number
+send_to = "+39338123456"
 message = "Hello World !"
 
 ser = serial.Serial(
