@@ -1,8 +1,8 @@
-#!/usr/bin/python
 import time
-import daisy
+import fox
  
-# Create a list of led istances
+# Create a list istances for all the leds
+# on a Daisy11 module wired on D2 connector
  
 led = [
 	daisy.Daisy11('D2','L1'),
