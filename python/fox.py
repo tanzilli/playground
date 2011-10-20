@@ -251,6 +251,11 @@ class Pin():
 	def off(self):
 		set_value(self.kernel_id,0)
 
+	def set_value(self,value):
+		return set_value(self.kernel_id,value)
+
+	def get_value(self):
+		return get_value(self.kernel_id)
 
 class Daisy4():
 
