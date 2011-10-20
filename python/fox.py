@@ -234,7 +234,7 @@ def get_value(kernel_id):
 			f.close()
 			return int(a)
 
-class FoxPin():
+class Pin():
 	"""
 	FOX pins related class
 	"""
