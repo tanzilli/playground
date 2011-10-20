@@ -211,11 +211,11 @@ def export(kernel_id):
 		f.write(str(kernel_id))
 		f.close()
 
-def direction(kernel_id,direction):
+def direction(kernel_id,direct):
 	iopath='/sys/class/gpio/gpio' + str(kernel_id)
 	if os.path.exists(iopath): 
 		f = open(iopath + '/direction','w')
-		f.write(direction)
+		f.write(direct)
 		f.close()
 
 def set_value(kernel_id,value):
