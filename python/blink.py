@@ -1,5 +1,4 @@
-#!/usr/bin/python
-import daisy
+import fox
 import time
  
 myled = daisy.Daisy11('D2','L1')
