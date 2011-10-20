@@ -1,18 +1,18 @@
-import time
 import fox
+import time
  
 # Create a list istances for all the leds
 # on a Daisy11 module wired on D2 connector
  
 led = [
-	daisy.Daisy11('D2','L1'),
-	daisy.Daisy11('D2','L2'),
-	daisy.Daisy11('D2','L3'),
-	daisy.Daisy11('D2','L4'),
-	daisy.Daisy11('D2','L5'),
-	daisy.Daisy11('D2','L6'),
-	daisy.Daisy11('D2','L7'),
-	daisy.Daisy11('D2','L8'),
+	fox.Daisy11('D2','L1'),
+	fox.Daisy11('D2','L2'),
+	fox.Daisy11('D2','L3'),
+	fox.Daisy11('D2','L4'),
+	fox.Daisy11('D2','L5'),
+	fox.Daisy11('D2','L6'),
+	fox.Daisy11('D2','L7'),
+	fox.Daisy11('D2','L8')
 	]
  
 while True:                        # Forever loop
