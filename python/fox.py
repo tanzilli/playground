@@ -241,29 +241,15 @@ class Pin():
 	kernel_id=-1
 
 	def __init__(self,connector_id,pin_name,direct):
-		self.kernelid=get_kernel_id(connector_id,pin_name)
-		export(self.kernelid)
-		direction(self.kernelid,direct)
-
-	def set_value(self,value):
-		set_value(self.kernel_id,value)
-
-	def get_value(self):
-		return(self.kernel_id)
-
+		self.kernel_id=get_kernel_id(connector_id,pin_name)
+		export(self.kernel_id)
+		direction(self.kernel_id,direct)
 
 	def on(self):
-		if (self.kernel_id!=0):
-			set_value(self.kernel_id,1)
-		else:
-			pass
-
+		set_value(self.kernel_id,1)
 		
 	def off(self):
-		if (self.kernel_id!=0):
-			set_value(self.kernel_id,0)
-		else:
-			pass
+		set_value(self.kernel_id,0)
 
 
 class Daisy4():
@@ -453,5 +439,4 @@ class DS18B20():
 			
 		p=tString.find("t=")
 		return float(tString[p+2:-1])/1000
-
 
