@@ -1,6 +1,5 @@
-#!/usr/bin/python
-import daisy
+import fox
  
-myrelay = daisy.Daisy4('D5','DIP1')
+myrelay = fox.Daisy4('D5','DIP1')
 myrelay.off()
 
