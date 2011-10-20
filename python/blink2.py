@@ -1,8 +1,7 @@
-#!/usr/bin/python
 import time
 import thread
 import threading
-import daisy
+import fox
  
 # This is the function that will be executed as a thread  
 def check_button(button,led):
@@ -13,8 +12,13 @@ def check_button(button,led):
 			led.off()
 		time.sleep(0.1)
  
- 
+#Define myled as the led labeled "L1" on the 
+#Daisy11 module wired on D2 connector 
 myled = daisy.Daisy11('D2','L1')
+
+
+#Define mybutton as the press button labeled "P1" on the 
+#Daisy5 module wired on D5 connector 
 mybutton = daisy.Daisy5('D5','P1')
  
  
