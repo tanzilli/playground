@@ -4,8 +4,7 @@ import time
 print "Blinking led"
 print "Type ctrl-C to exit"
  
-#led = fox.Pin('J7.3','low')
-led = fox.Pin('J6','21','low')
+led = fox.Pin('J7','3','low')
  
 while True:
 	time.sleep(0.2)
