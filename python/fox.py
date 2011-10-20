@@ -240,10 +240,10 @@ class Pin():
 	"""
 	kernel_id=-1
 
-	def __init__(self,connector_id,pin_name,direction):
+	def __init__(self,connector_id,pin_name,direct):
 		self.kernelid=get_kernel_id(connector_id,pin_name)
 		export(self.kernelid)
-		direction(self.kernelid,direction)
+		direction(self.kernelid,direct)
 
 	def set_value(self,value):
 		set_value(self.kernel_id,value)
