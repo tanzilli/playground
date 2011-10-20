@@ -5,4 +5,4 @@ http.createServer(function (req, res) {
 	res.end('Hello World\n');
 }).listen(81, "0.0.0.0");
 
-console.log('Server web running on FOX Board G20');
+console.log('Simple web running on FOX Board G20');
