@@ -2,7 +2,7 @@
 import time
 import thread
 import threading
-import daisy
+import fox
 
 #Commento di prova 
 def check_button(button,led):
@@ -20,11 +20,11 @@ def timed_led(button,led,delay):
 			time.sleep(delay)
 			led.off()
  
-myled = daisy.Daisy11('D2','L1')
-mybutton = daisy.Daisy5('D5','P1')
+myled = fox.Daisy11('D2','L1')
+mybutton = fox.Daisy5('D5','P1')
  
-myled_2 = daisy.Daisy11('D2','L2')
-mybutton_2 = daisy.Daisy5('D5','P2')
+myled_2 = fox.Daisy11('D2','L2')
+mybutton_2 = fox.Daisy5('D5','P2')
  
 thread.start_new_thread(check_button,(mybutton,myled))
 thread.start_new_thread(timed_led,(mybutton_2,myled_2,5))
