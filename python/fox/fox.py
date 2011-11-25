@@ -396,6 +396,60 @@ class Daisy11():
 		else:
 			return False
 
+class Daisy19():
+
+	"""
+	DAISY-19 (4 mosfet output) related class
+	http://www.acmesystems.it/?id=daisy19_4_mosfet_output	
+	"""
+
+	kernel_id=-1
+
+	outputs_first = {
+		'O1' :  '2',
+		'O2' :  '3',
+		'O3' :  '4',
+		'O4' :  '5',
+	}
+
+	outputs_second = {
+		'O1' :  '6',
+		'O2' :  '7',
+		'O3' :  '8',
+		'O4' :  '9',
+	}
+
+	def __init__(self,connector_id,position,output_id):
+		if (position=="first"): 
+			pin=self.outputs_first[output_id]
+		else:
+			pin=self.outputs_second[output_id]
+			
+		self.kernel_id = get_kernel_id(connector_id,pin)
+
+		if (self.kernel_id!=0):
+			export(self.kernel_id)
+			direction(self.kernel_id,'low')
+
+
+	def on(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,1)
+		else:
+			pass
+
+	def off(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,0)
+		else:
+			pass
+
+	def get(self):
+		if get_value(self.kernel_id):
+			return True
+		else:
+			return False
+
 
 #--------------------------------------------------------------
 
