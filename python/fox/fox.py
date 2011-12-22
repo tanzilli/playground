@@ -499,3 +499,33 @@ class DS18B20():
 		p=tString.find("t=")
 		return float(tString[p+2:-1])/1000
 
+class DS28EA00():
+
+	sensor_path=""
+
+	def __init__(self,w1Id):
+		if not os.path.exists(w1path): 
+			print "1-wire bus not found"
+			return
+
+		self.sensor_path = os.path.join(w1path,"42-" + w1Id)
+
+		if not os.path.exists(self.sensor_path): 
+			print "Sensor %s not found" % (w1Id)
+			return
+
+#		print self.sensor_path
+
+	def getTemp(self):
+
+		f = open(self.sensor_path + '/therm','r')
+		tString=f.read()
+		f.close()
+
+		if tString.find("NO")>=0:
+			print "Wrong CRC"
+			return
+			
+		p=tString.find("t=")
+		return float(tString[p+2:-1])
+
