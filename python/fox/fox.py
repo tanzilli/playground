@@ -3,8 +3,8 @@
 # Python collection of funcions that allows to easily manage the FOX 
 # Board G20 I/O lines and Daisy building modules.
 #
-# (C) 2011 Sergio Tanzilli <tanzilli@acmesystems.it>
-# (C) 2011 Acme Systems srl (http://www.acmesystems.it)
+# (C) 2012 Sergio Tanzilli <tanzilli@acmesystems.it>
+# (C) 2012 Acme Systems srl (http://www.acmesystems.it)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,6 +12,16 @@
 # (at your option) any later version.
 
 import os.path
+
+serial_ports = {
+	'D1' :  '/dev/ttyS2',
+	'D2' :  '/dev/ttyS5',
+	'D3' :  '/dev/ttyS1',
+	'D5' :  '/dev/ttyS6',
+	'D6' :  '/dev/ttyS4',
+	'D8' :  '/dev/ttyS3'
+}
+
 		
 # Connectors pin assignments
 # 'pin name', 'kernel id'  # pin description
@@ -261,7 +271,7 @@ class Daisy4():
 
 	"""
 	DAISY-4 (Relay module) related class
-	http://www.acmesystems.it/?id=daisy_4_one_relay
+	http://www.acmesystems.it/?id=DAISY-4
 	"""
 	kernel_id=-1
 
@@ -304,8 +314,7 @@ class Daisy5():
 
 	"""
 	DAISY-5 (8 pushbuttons) related class
-	http://www.acmesystems.it/?id=daisy_5_push_buttons
-	"""
+	http://www.acmesystems.it/?id=DAISY-5
 	kernel_id=-1
 
 	buttons = {
@@ -352,7 +361,7 @@ class Daisy11():
 
 	"""
 	DAISY-11 (8 led) related class
-	http://www.acmesystems.it/?id=daisy_11_leds
+	http://www.acmesystems.it/?id=DAISY-11
 	"""
 
 	kernel_id=-1
@@ -396,11 +405,40 @@ class Daisy11():
 		else:
 			return False
 
+class Daisy15():
+
+	serial = null
+
+	"""
+	DAISY-15 (4DSystems lcd display) related class
+	http://www.acmesystems.it/?id=DAISY-15
+	"""
+
+	def __init__(self,connector_id):
+		self.serial = serial.Serial(
+			port=serial_ports[connector_id], 
+			baudrate=9600, 
+			timeout=1,
+			parity=serial.PARITY_NONE,
+			stopbits=serial.STOPBITS_ONE,
+			bytesize=serial.EIGHTBITS
+		)
+
+		self.serial.write("U")		# Autobaud char
+		rtc = self.serial.read(1)	# Wait for a reply
+
+		self.serial.write("E")		# Clear screen
+		rtc = self.serial.read(1)	# Wait for a reply
+
+	def print(self,col,row,str):
+		self.serial.write("s%c%c%c%c%c%s%c" % (int(row),int(col),2,0xFF,0xFF,str,0x00))		
+		rtc = self.serial.read(1)
+
 class Daisy19():
 
 	"""
 	DAISY-19 (4 mosfet output) related class
-	http://www.acmesystems.it/?id=daisy19_4_mosfet_output	
+	http://www.acmesystems.it/?id=DAISY-19
 	"""
 
 	kernel_id=-1
