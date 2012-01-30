@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 
-port = 8080
+PORT_NUMBER = 8080
 
 class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -12,8 +12,8 @@ class myHandler(BaseHTTPRequestHandler):
 		return
 
 try:
-	server = HTTPServer(('', 8080), myHandler)
-	print 'Started httpserver on port ' , port
+	server = HTTPServer(('', PORT_NUMBER), myHandler)
+	print 'Started httpserver on port ' , PORT_NUMBER
 	server.serve_forever()
 except KeyboardInterrupt:
 	print '^C received, shutting down the web server'
