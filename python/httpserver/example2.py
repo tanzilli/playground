@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
+from os import curdir, sep
 
 PORT_NUMBER = 8080
 
