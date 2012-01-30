@@ -9,10 +9,12 @@
 This is a simple static web page
 </p>
 
+<hr/>
+
 <h2>Get data from a HTML form</h1>
 
 <p>
-This section is used from the <b>example3.py</b> to get data from an HTML form.
+This section is used by the <b>example3.py</b> to get data from an HTML form.
 </p>
 
 <form method="POST" action="/send">
@@ -20,6 +22,20 @@ This section is used from the <b>example3.py</b> to get data from an HTML form.
 <input type="text" name="your_name"/>
 <input type="submit" value="Send"/>
 </form>
+
+<hr/>
+
+<h2>Control a blinking led</h1>
+
+<p>
+This section is used by the <b>led1.py</b> example to get data from an HTML form.
+</p>
+
+<form method="POST" action="/blink">
+<input type="submit" name='cmd 'value="stop"/>
+<input type="submit" name='cmd 'value="start"/>
+</form>
+
 
 </body>
 </html>
