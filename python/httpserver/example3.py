@@ -12,7 +12,7 @@ class myHandler(BaseHTTPRequestHandler):
 	#Handler for the GET requests
 	def do_GET(self):
 		if self.path=="/":
-			self.path="/index.html"
+			self.path="/index_example3.html"
 
 		try:
 			#Check the file extension required and
