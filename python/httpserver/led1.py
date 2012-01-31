@@ -8,6 +8,7 @@ import fox
 import time
 
 PORT_NUMBER = 8080
+blink = True
 
 #This class will handles any incoming request from
 #the browser 
@@ -15,8 +16,9 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	#Handler for the GET requests
 	def do_GET(self):
+		# Define the default page
 		if self.path=="/":
-			self.path="/index.html"
+			self.path="/index_led1.html"
 
 		try:
 			#Check the file extension required and
@@ -54,19 +56,7 @@ class myHandler(BaseHTTPRequestHandler):
 
 	#Handler for the POST requests
 	def do_POST(self):
-		if self.path=="/send":
-			form = cgi.FieldStorage(
-				fp=self.rfile, 
-				headers=self.headers,
-				environ={'REQUEST_METHOD':'POST',
-		                 'CONTENT_TYPE':self.headers['Content-Type'],
-			})
-
-			print "Your name is: %s" % form["your_name"].value
-			self.send_response(200)
-			self.end_headers()
-			self.wfile.write("Thanks %s !" % form["your_name"].value)
-			return			
+		global blink
 
 		if self.path=="/blink":
 			form = cgi.FieldStorage(
@@ -76,10 +66,17 @@ class myHandler(BaseHTTPRequestHandler):
 		                 'CONTENT_TYPE':self.headers['Content-Type'],
 			})
 
-			print "Your name is: %s" % form["cmd"].value
-			self.send_response(200)
+			if (form["cmd"].value=="stop blinking"):
+				print "Stop blinking"
+				blink=False
+			else:
+				blink=True
+				print "Start blinking"
+
+			#Redirect the browser on the main page 
+			self.send_response(302)
+			self.send_header('Location','/')
 			self.end_headers()
-			self.wfile.write("Thanks %s !" % form["cmd"].value)
 			return			
 			
 #This is a thread that runs the web server 
@@ -101,13 +98,17 @@ def WebServerThread():
 # Runs the web server thread
 thread.start_new_thread(WebServerThread,())		
 
+# Use the L1 led on Daisy11 module
 ledL1=fox.Daisy11("D2","L1")
 
 #Forever loop
 while True:
-	ledL1.on();
-	print "ON"	
-	time.sleep(1)
-	ledL1.off();
-	print "OFF"	
-	time.sleep(1)
+	# Check the blink flag
+	if blink==True:	
+		ledL1.on()
+		time.sleep(0.2)
+		ledL1.off()
+		time.sleep(0.2)
+	else: 
+		ledL1.off()
+
