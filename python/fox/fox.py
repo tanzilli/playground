@@ -413,7 +413,7 @@ class Daisy15():
 	http://www.acmesystems.it/?id=DAISY-15
 	"""
 
-	serial = null
+	serial = None
 
 	def __init__(self,connector_id):
 		self.serial = serial.Serial(
