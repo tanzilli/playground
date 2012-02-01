@@ -3,8 +3,8 @@
 # Python collection of funcions that allows to easily manage the FOX 
 # Board G20 I/O lines and Daisy building modules.
 #
-# (C) 2011 Sergio Tanzilli <tanzilli@acmesystems.it>
-# (C) 2011 Acme Systems srl (http://www.acmesystems.it)
+# (C) 2012 Sergio Tanzilli <tanzilli@acmesystems.it>
+# (C) 2012 Acme Systems srl (http://www.acmesystems.it)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,6 +12,16 @@
 # (at your option) any later version.
 
 import os.path
+
+serial_ports = {
+	'D1' :  '/dev/ttyS2',
+	'D2' :  '/dev/ttyS5',
+	'D3' :  '/dev/ttyS1',
+	'D5' :  '/dev/ttyS6',
+	'D6' :  '/dev/ttyS4',
+	'D8' :  '/dev/ttyS3'
+}
+
 		
 # Connectors pin assignments
 # 'pin name', 'kernel id'  # pin description
@@ -261,7 +271,7 @@ class Daisy4():
 
 	"""
 	DAISY-4 (Relay module) related class
-	http://www.acmesystems.it/?id=daisy_4_one_relay
+	http://www.acmesystems.it/?id=DAISY-4
 	"""
 	kernel_id=-1
 
@@ -304,9 +314,9 @@ class Daisy5():
 
 	"""
 	DAISY-5 (8 pushbuttons) related class
-	http://www.acmesystems.it/?id=daisy_5_push_buttons
-	"""
+	http://www.acmesystems.it/?id=DAISY-5
 	kernel_id=-1
+	"""
 
 	buttons = {
 		'P1' :  '2',
@@ -352,7 +362,7 @@ class Daisy11():
 
 	"""
 	DAISY-11 (8 led) related class
-	http://www.acmesystems.it/?id=daisy_11_leds
+	http://www.acmesystems.it/?id=DAISY-11
 	"""
 
 	kernel_id=-1
@@ -384,6 +394,89 @@ class Daisy11():
 			pass
 
 		
+	def off(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,0)
+		else:
+			pass
+
+	def get(self):
+		if get_value(self.kernel_id):
+			return True
+		else:
+			return False
+
+class Daisy15():
+
+	"""
+	DAISY-15 (4DSystems lcd display) related class
+	http://www.acmesystems.it/?id=DAISY-15
+	"""
+
+	serial = null
+
+	def __init__(self,connector_id):
+		self.serial = serial.Serial(
+			port=serial_ports[connector_id], 
+			baudrate=9600, 
+			timeout=1,
+			parity=serial.PARITY_NONE,
+			stopbits=serial.STOPBITS_ONE,
+			bytesize=serial.EIGHTBITS
+		)
+
+		self.serial.write("U")		# Autobaud char
+		rtc = self.serial.read(1)	# Wait for a reply
+
+		self.serial.write("E")		# Clear screen
+		rtc = self.serial.read(1)	# Wait for a reply
+
+	def send(self,col,row,str):
+		self.serial.write("s%c%c%c%c%c%s%c" % (int(row),int(col),2,0xFF,0xFF,str,0x00))		
+		rtc = self.serial.read(1)
+
+class Daisy19():
+
+	"""
+	DAISY-19 (4 mosfet output) related class
+	http://www.acmesystems.it/?id=DAISY-19
+	"""
+
+	kernel_id=-1
+
+	outputs_first = {
+		'O1' :  '2',
+		'O2' :  '3',
+		'O3' :  '4',
+		'O4' :  '5',
+	}
+
+	outputs_second = {
+		'O1' :  '6',
+		'O2' :  '7',
+		'O3' :  '8',
+		'O4' :  '9',
+	}
+
+	def __init__(self,connector_id,position,output_id):
+		if (position=="first"): 
+			pin=self.outputs_first[output_id]
+		else:
+			pin=self.outputs_second[output_id]
+			
+		self.kernel_id = get_kernel_id(connector_id,pin)
+
+		if (self.kernel_id!=0):
+			export(self.kernel_id)
+			direction(self.kernel_id,'low')
+
+
+	def on(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,1)
+		else:
+			pass
+
 	def off(self):
 		if (self.kernel_id!=0):
 			set_value(self.kernel_id,0)
@@ -444,4 +537,34 @@ class DS18B20():
 			
 		p=tString.find("t=")
 		return float(tString[p+2:-1])/1000
+
+class DS28EA00():
+
+	sensor_path=""
+
+	def __init__(self,w1Id):
+		if not os.path.exists(w1path): 
+			print "1-wire bus not found"
+			return
+
+		self.sensor_path = os.path.join(w1path,"42-" + w1Id)
+
+		if not os.path.exists(self.sensor_path): 
+			print "Sensor %s not found" % (w1Id)
+			return
+
+#		print self.sensor_path
+
+	def getTemp(self):
+
+		f = open(self.sensor_path + '/therm','r')
+		tString=f.read()
+		f.close()
+
+		if tString.find("NO")>=0:
+			print "Wrong CRC"
+			return
+			
+		p=tString.find("t=")
+		return float(tString[p+2:-1])
 

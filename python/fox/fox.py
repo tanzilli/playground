@@ -316,6 +316,7 @@ class Daisy5():
 	DAISY-5 (8 pushbuttons) related class
 	http://www.acmesystems.it/?id=DAISY-5
 	kernel_id=-1
+	"""
 
 	buttons = {
 		'P1' :  '2',
@@ -407,12 +408,12 @@ class Daisy11():
 
 class Daisy15():
 
-	serial = null
-
 	"""
 	DAISY-15 (4DSystems lcd display) related class
 	http://www.acmesystems.it/?id=DAISY-15
 	"""
+
+	serial = null
 
 	def __init__(self,connector_id):
 		self.serial = serial.Serial(
@@ -430,7 +431,7 @@ class Daisy15():
 		self.serial.write("E")		# Clear screen
 		rtc = self.serial.read(1)	# Wait for a reply
 
-	def print(self,col,row,str):
+	def send(self,col,row,str):
 		self.serial.write("s%c%c%c%c%c%s%c" % (int(row),int(col),2,0xFF,0xFF,str,0x00))		
 		rtc = self.serial.read(1)
 
