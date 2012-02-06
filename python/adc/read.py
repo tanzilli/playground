@@ -15,7 +15,7 @@ while True:
 
 	fd = open(path + "chan" + str(ch),"r")
 	sample = fd.read()
-	print "chan%d=%.2f volt" % (ch,int(sample)*volt_per_point)
+	print "Channel %d = %.2f volt" % (ch,int(sample)*volt_per_point)
 	fd.close()
 	time.sleep(0.5)
 	ch+=1
