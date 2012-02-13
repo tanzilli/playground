@@ -3,11 +3,10 @@
 #include <linux/i2c-dev.h>
 #include <errno.h>
 
-
 #define I2C_ADDR 0x20
  
 int main (void) {
-	char value;
+	int value;
 	int fd;
 
 	fd = open("/dev/i2c-0", O_RDWR);
