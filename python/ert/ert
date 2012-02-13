@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import time
+import evdev
+import os
+import syslog
+
+ip = "192.168.2.95"
+
+dev = evdev.Device("/dev/input/event0")
+while 1:
+	dev.poll()
+	time.sleep(1)
+	if 'BTN_1' in dev.buttons and dev.buttons['BTN_1'] == 1:
+		time.sleep(2)
+		dev.poll()
+		if dev.buttons['BTN_1'] == 1:
+			os.system('echo default-on > /sys/class/leds/user_led/trigger')
+			os.system("/sbin/ifconfig eth0 add %s up" % ip)
+			syslog.syslog(syslog.LOG_KERN, "ert setup an emergency ip: %s" % ip)
+			time.sleep(10)
+			os.system('echo heartbeat > /sys/class/leds/user_led/trigger')
