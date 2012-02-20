@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import serial
 
+#Wire the DAISY-15 on D8
 display_port = "/dev/ttyS3"
  
 # Open the serial port on J16
