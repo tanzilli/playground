@@ -13,10 +13,16 @@ ser = serial.Serial(
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS
 )  
- 
-print ser.portstr	# Check which port was really used
-ser.write("U")		# Autobaud char
-s = ser.read(1)		# Wait for a reply
-ser.write("E")		# Clear screen
+
+# Check which port was really used 
+print ser.portstr	
+
+# Autobaud char
+ser.write("U")		
 s = ser.read(1)
+
+# Clear screen
+ser.write("E")
+s = ser.read(1)
+
 ser.close()

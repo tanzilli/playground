@@ -2,13 +2,14 @@
 import serial,sys,getopt
 
 display_port = "/dev/ttyS3"
-
  
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "x:y:s:b")
+
 except getopt.GetoptError, err:
 	# print help information and exit:
-	print str(err) # will print something like "option -a not recognized"
+	# will print something like "option -a not recognized"
+	print str(err) 
 	sys.exit(2)
  
 x=0
@@ -28,8 +29,7 @@ for o, a in opts:
 	else:
 		assert False, "Unhandled option"
  
-# Open the serial port on J16
- 
+# Open the serial port
 ser = serial.Serial(
 	port=display_port, 
 	baudrate=9600, 
@@ -39,15 +39,18 @@ ser = serial.Serial(
 	bytesize=serial.EIGHTBITS
 )  
  
-ser.write("U")		# Autobaud char
-rtc = ser.read(1)	# Wait for a reply
+# Autobaud char
+ser.write("U")		
+rtc = ser.read(1)
  
+# Clear screen
 if clear==True:
-	ser.write("E")		# Clear screen
-	rtc = ser.read(1)	# Wait for a reply
+	ser.write("E")		
+	rtc = ser.read(1)
  
+# Send string
 ser.write("s%c%c%c%c%c%s%c" % (int(x),int(y),1,0xFF,0xFF,s,0x00))		
-rtc = ser.read(1)	# Wait for a reply
+rtc = ser.read(1)
  
-ser.close()			# Close port
+ser.close()
 
