@@ -13,7 +13,7 @@ send_to = "+393460624344"
 message = "Hello World !"
 
 ser = serial.Serial(
-	port=serialoprt, 
+	port=serialport, 
 	baudrate=115200, 
 	timeout=1,
 	parity=serial.PARITY_NONE,
