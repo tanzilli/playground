@@ -1,10 +1,11 @@
 # Send a SMS using a Daisy13 module wired on D1 connector
+# or a FOXGM2 board
 
 import serial
 import time
 
 # Insert here the destination number
-send_to = "+39338123456"
+send_to = "+393460624344"
 message = "Hello World !"
 
 ser = serial.Serial(
