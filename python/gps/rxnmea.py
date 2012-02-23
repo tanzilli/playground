@@ -3,7 +3,7 @@ import serial
 import time
 
 ser = serial.Serial(
-	port='/dev/ttyS2', 
+	port='/dev/ttyS3', 
 	baudrate=4800, 
 	timeout=1,
 	parity=serial.PARITY_NONE,
