@@ -1,15 +1,19 @@
-# Send a SMS using a Daisy13 module wired on D1 connector
-# or a FOXGM2 board
-
+# Send a SMS
 import serial
 import time
+
+# DAISY-13 plugged on D1 connector
+# serialport = "/dev/ttyS2"
+
+# Telit GM862 on FOXGM board
+serialport = "/dev/ttyS1"
 
 # Insert here the destination number
 send_to = "+393460624344"
 message = "Hello World !"
 
 ser = serial.Serial(
-	port='/dev/ttyS2', 
+	port=serialoprt, 
 	baudrate=115200, 
 	timeout=1,
 	parity=serial.PARITY_NONE,
