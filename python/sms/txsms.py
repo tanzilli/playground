@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # Send a SMS
 import serial
 import time
