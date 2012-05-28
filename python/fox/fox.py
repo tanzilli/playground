@@ -495,8 +495,6 @@ class Daisy19():
 		else:
 			return False
 
-
-
 class Daisy24():
 
 	"""
@@ -558,9 +556,9 @@ class Daisy24():
 			return
 
 		if y==0:
-			lcd.sendcommand(0x80+0x00+x)
+			self.sendcommand(0x80+0x00+x)
 		else:
-			lcd.sendcommand(0x80+0x40+x)
+			self.sendcommand(0x80+0x40+x)
 		return
 
 	def putchar(self,value):
