@@ -533,14 +533,6 @@ class Daisy24():
 		time.sleep(0.001)
 		return
 
-	def setcontrast(self,value):
-		"""
-		Set the display contrast
-		value = 0 to 15
-		"""
-		self.sendcommand(0x70 + value)
-		return
-
 	def home(self):
 		"""
 		Place the curson at home position
@@ -549,7 +541,23 @@ class Daisy24():
 		time.sleep(0.001)
 		return
 
-	def curpos(self,x,y):
+	def setcontrast(self,value):
+		"""
+		Set the display contrast
+		value = 0 to 15
+		"""
+		self.sendcommand(0x70 + value)
+		return
+
+	def setdoublefont(self):
+		self.sendcommand(0x30 + 0x0C + 0x01)
+		return
+
+	def setsinglefont(self):
+		self.sendcommand(0x30 + 0x08 + 0x01)
+		return
+
+	def setcurpos(self,x,y):
 		if y<0 or y>1:
 			return
 		if x<0 or x>15:
