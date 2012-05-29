@@ -495,10 +495,48 @@ class Daisy19():
 		else:
 			return False
 
+class Daisy22():
+
+	"""
+	DAISY-22 (8 bit I2C expander)
+	http://www.acmesystems.it/?id=DAISY-22
+	"""
+
+	i2c_bus=-1
+	i2c_address=-1
+	line=-1
+
+	def __init__(self,bus_id=0,address=0x20,line=0):
+		self.i2c_bus = smbus.SMBus(bus_id)
+		self.i2c_address=address
+		self.line=line
+		return
+
+	def writebyte(self,value):
+   		self.i2c_bus.write_byte(self.i2c_address,value)		
+		return
+
+	def readbyte(self):
+		return 	self.i2c_bus.read_byte(self.i2c_address)
+
+	def on(self):
+		currentvalue=self.i2c_bus.read_byte(self.i2c_address)
+   		self.i2c_bus.write_byte(self.i2c_address,currentvalue|1<<self.line)		
+		return
+
+	def off(self):
+		currentvalue=self.i2c_bus.read_byte(self.i2c_address)
+   		self.i2c_bus.write_byte(self.i2c_address,currentvalue&(255-(1<<self.line)))		
+		return
+
+	def get(self):
+		return self.i2c_bus.read_byte(self.i2c_address)
+
+
 class Daisy24():
 
 	"""
-	DAISY-24 (16x2 LCD module
+	DAISY-24 (16x2 LCD module)
 	http://www.acmesystems.it/?id=DAISY-24
 	"""
 
