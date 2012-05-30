@@ -530,7 +530,8 @@ class Daisy22():
 		return
 
 	def get(self):
-		return self.i2c_bus.read_byte(self.i2c_address)
+		linevalue=self.i2c_bus.read_byte(self.i2c_address) & (1<<self.line)
+		return linevalue >> self.line
 
 
 class Daisy24():
