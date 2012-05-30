@@ -535,6 +535,11 @@ class Daisy22():
 		linevalue=self.i2c_bus.read_byte(self.i2c_address) & (1<<self.line)
 		return linevalue >> self.line
 
+	def pressed(self):
+		if self.get()==0:
+			return True
+		else:
+			return False
 
 class Daisy24():
 
@@ -545,8 +550,15 @@ class Daisy24():
 
 	i2c_bus=-1
 	lcd_address = 0x3E
+	exp_address = -1
+	backled = -1
+	K0 = -1 
+	K1 = -1 
+	K2 = -1 
+	K3 = -1 
 
-	def __init__(self,bus_id):
+	def __init__(self,bus_id,exp_address):
+		self.exp_address = exp_address
 		self.i2c_bus = smbus.SMBus(bus_id)
 		self.sendcommand(0x38)
 		self.sendcommand(0x39)
@@ -556,6 +568,11 @@ class Daisy24():
 		self.sendcommand(0x6F) #Follower control
 		self.sendcommand(0x0C) #Display ON
 		self.clear()
+		self.K0=Daisy22(bus_id,exp_address,0)
+		self.K1=Daisy22(bus_id,exp_address,1)
+		self.K2=Daisy22(bus_id,exp_address,2)
+		self.K3=Daisy22(bus_id,exp_address,3)
+		self.backled=Daisy22(bus_id,exp_address,4)
 		return
 
 	def sendcommand(self,value):
@@ -624,6 +641,25 @@ class Daisy24():
 			self.putchar(ord(char))
 		return
 
+	def backlighton(self):
+		self.backled.on()		
+		return
+
+	def backlightoff(self):
+		self.backled.off()
+		return
+
+	def pressed(self,keyid):
+		if keyid==0:
+			return self.K0.pressed()
+		if keyid==1:
+			return self.K1.pressed()
+		if keyid==2:
+			return self.K2.pressed()
+		if keyid==3:
+			return self.K3.pressed()
+
+		return False
 
 #--------------------------------------------------------------
 
