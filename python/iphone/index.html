@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Remote controller</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/jquery.mobile-1.1.0.min.js"></script>
+</head> 
+
+<body> 
+<div data-role="page" id="home"> 
+	<div data-role="header">
+		<h1>Home</h1>
+	</div>
+ 
+	<div data-role="content">
+		Welcome to the FOX Board G20 main page.
+
+		<ul data-role="listview" data-inset="true">
+			<li><a href="#daisy4">Daisy-4</a></li>
+			<li><a href="#daisy11" data-transition="slide">Daisy-11</a></li>
+		</ul>
+
+	</div>
+</div>
+
+<div data-role="page" id="daisy11"> 
+	<div data-role="header">
+		<h1>Daisy-11</h1>
+	</div>
+ 
+	<div data-role="content">
+
+		Led L1:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L2:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L3:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L4:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L5:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L6:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L7:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L8:
+		<select name="slider" id="flip-b" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+
+		<a href="#home" data-role="button" data-transition="slidedown"  data-icon="arrow-u">Home</a>
+	</div>
+</div> 
+</body>
+</html>
