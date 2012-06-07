@@ -557,7 +557,7 @@ class Daisy24():
 	K2 = -1 
 	K3 = -1 
 
-	def __init__(self,bus_id,exp_address):
+	def __init__(self,bus_id=0,exp_address=0x27):
 		self.exp_address = exp_address
 		self.i2c_bus = smbus.SMBus(bus_id)
 		self.sendcommand(0x38)

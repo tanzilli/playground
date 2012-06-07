@@ -8,7 +8,7 @@ class CServer( object ) :
     def do_contact(self, **params):
         pass
 
-cherrypy.server.socket_port = 8080
+cherrypy.server.socket_port = 80
 cherrypy.server.socket_host = '0.0.0.0'
 conf = { '/':
 	{ 
