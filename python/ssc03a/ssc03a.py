@@ -29,8 +29,8 @@ serial_ports = {
 
 class SSC03A():
 	serid=-1
-	centerpos=-1
-	offsetpos=-1
+	centerpos=127
+	offsetpos=127
 
 	def __init__(self,whereisit="/dev/ttyS3"):
 		if (whereisit.find("/dev/")<>-1):
@@ -52,7 +52,6 @@ class SSC03A():
 
 	def sendpos(self,servoid,value):
 		self.serid.write(chr(0xFF) + chr(servoid+0x08) + chr(value))
-		time.sleep(0.5)
 		
 	def setcenter(self,value):
 		self.centerpos=value
@@ -62,13 +61,24 @@ class SSC03A():
 		self.offsetpos=value
 		return
 
-	def setpos(self,value):
+	def setpos(self,servo,degree):
+		range=self.offsetpos*2
+		degree=degree+90
+		x=range*degree/180
+		print self.centerpos-self.offsetpos+x
+		self.sendpos(servo,self.centerpos-self.offsetpos+x)
 		return
 	
 
+servodelay=0.7
+
 servo0=SSC03A("D8")
-servo0.sendpos(0,100)
-servo0.sendpos(0,140)
- 
+while True:
+	for i in range(0,8):
+		servo0.setpos(i,-90)
+	time.sleep(servodelay)
+	for i in range(0,8):
+		servo0.setpos(i,+90)
+	time.sleep(servodelay)
 
 
