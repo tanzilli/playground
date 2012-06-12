@@ -1,0 +1,93 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>WebApp example</title> 
+	<link rel="apple-touch-icon" href="images/apple.png"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/jquery.mobile-1.1.0.min.js"></script>
+
+	<script>
+	$(document).bind('pageinit',function() {
+		$(".led_slider").bind( "change", function() {
+			console.log("Ok");
+			console.log($(this).val());
+			console.log($(this).attr("name"));
+
+			$.ajax({
+				type: "GET",
+				url: "/led",
+				data: ({
+					id:$(this).attr("name"),
+					state: $(this).val()}
+					),
+				cache: false,
+				dataType: "text",
+			});
+			
+		});
+	});
+	</script>	  
+});
+</head> 
+
+<body> 
+<div data-role="page" id="daisy11"> 
+	<div data-role="header">
+		<h1>Daisy-11</h1>
+	</div>
+ 
+	<div data-role="content">
+		Led L1:
+		<select name="L1" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L2:
+		<select name="L2" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L3:
+		<select name="L3" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L4:
+		<select name="L4" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L5:
+		<select name="L5" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L6:
+		<select name="L6" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L7:
+		<select name="L7" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+		Led L8:
+		<select name="L8" class="led_slider" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select> 
+		<br/>
+	</div>
+</div> 
+</body>
+</html>
