@@ -1,7 +1,7 @@
 import fox
 import time
 
-kernel_id = get_kernel_id("N","2")
+kernel_id = fox.get_kernel_id('N','2')
 fox.export(kernel_id)
 fox.direction(kernel_id,'low')
 
