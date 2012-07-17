@@ -18,8 +18,9 @@ ser.flushInput()
 
 print "NMEA messages received from GPS chip (type Ctrl-C to exit)"
 
+linecounter=1
 while True:
-	s = ser.read(1) 
-	sys.stdout.write(s)
-	sys.stdout.flush()
+	NMEA_line = ser.readline()
+	linecounter+=1
+	print "%d: [%s]" % (linecounter,NMEA_line.replace("\r\n",""))
 
