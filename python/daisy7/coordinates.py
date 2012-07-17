@@ -36,10 +36,13 @@ while True:
 
 		H=float(values[2][0:2])
 		M=float(values[2][2:4])+(float(values[2][5:9])/10000)
-		print "     Latitude: ",H+M/60
+		Latitude=H+M/60
+		print "     Latitude: ",Latitude
 
 		H=float(values[4][0:3])
 		M=float(values[4][3:5])+(float(values[4][6:10])/10000)
-		print "    Longitude: ",H+M/60
+		Longitude=H+M/60
+		print "    Longitude: ",Longitude
+		print "          URL: https://maps.google.com/maps?q=%f,%f" % (Latitude,Longitude)
 	
 
