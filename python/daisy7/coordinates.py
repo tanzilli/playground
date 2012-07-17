@@ -28,7 +28,18 @@ while True:
 	#Select just the GGA message line with GPS quality indicator = 1
 	#(see the GPS datasheet)
 	if values[0]=="$GPGGA" and values[6]=="1":
-		print " Latidute:  %s %s" % (values[2],values[3])
-		print "Longitude: %s %s" % (values[4],values[5])
+		print "NMEA coordinates"
+		print "     Latidute:  %s %s" % (values[2],values[3])
+		print "    Longitude: %s %s" % (values[4],values[5])
+
+		print "Google maps API 3 coordinates"
+
+		H=float(values[2][0:2])
+		M=float(values[2][2:4])+(float(values[2][5:9])/10000)
+		print "     Latitude: ",H+M/60
+
+		H=float(values[4][0:3])
+		M=float(values[4][3:5])+(float(values[4][6:10])/10000)
+		print "    Longitude: ",H+M/60
 	
 
