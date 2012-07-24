@@ -1,13 +1,13 @@
-import fox
+import acmeboards
 import time
 
-kernel_id = fox.get_kernel_id('N','2')
-fox.export(kernel_id)
-fox.direction(kernel_id,'low')
+kernel_id = acmeboards.get_kernel_id('N','2')
+acmeboards.export(kernel_id)
+acmeboards.direction(kernel_id,'low')
 
 while True:
-	fox.set_value(kernel_id,1)
+	acmeboards.set_value(kernel_id,1)
 	time.sleep(1)
-	fox.set_value(kernel_id,0)
+	acmeboards.set_value(kernel_id,0)
 	time.sleep(1)
 
