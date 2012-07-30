@@ -1,7 +1,7 @@
-import fox
+import ablib
 import time
 
-lcd = fox.Daisy24(0,0x27)
+lcd = ablib.Daisy24(0,0x27)
 
 while True:
 	if lcd.pressed(0):

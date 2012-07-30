@@ -1,8 +1,8 @@
 #!/usr/bin/python
 import time
-import fox
+import ablib
  
 print "Scan for the available thermal sensors"
  
-for device in fox.w1buslist():
+for device in ablib.w1buslist():
 	print "Sensor ID = " + device

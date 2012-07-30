@@ -1,15 +1,15 @@
 import cherrypy
 import os
-import fox
+import ablib
 
-L1 = fox.Daisy11("D2","L1")
-L2 = fox.Daisy11("D2","L2")
-L3 = fox.Daisy11("D2","L3")
-L4 = fox.Daisy11("D2","L4")
-L5 = fox.Daisy11("D2","L5")
-L6 = fox.Daisy11("D2","L6")
-L7 = fox.Daisy11("D2","L7")
-L8 = fox.Daisy11("D2","L8")
+L1 = ablib.Daisy11("D2","L1")
+L2 = ablib.Daisy11("D2","L2")
+L3 = ablib.Daisy11("D2","L3")
+L4 = ablib.Daisy11("D2","L4")
+L5 = ablib.Daisy11("D2","L5")
+L6 = ablib.Daisy11("D2","L6")
+L7 = ablib.Daisy11("D2","L7")
+L8 = ablib.Daisy11("D2","L8")
 
 L1.on()
 

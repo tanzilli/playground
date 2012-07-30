@@ -2,7 +2,7 @@
 
 #Read the voltage values from the 
 #built-in ADC
-#http://www.acmesystems.it/?id=foxg20_adc
+#http://www.acmesystems.it/foxg20_adc
  
 import time 
 

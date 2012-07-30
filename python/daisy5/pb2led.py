@@ -1,12 +1,12 @@
 #!/usr/bin/python
 import time
-import fox
+import ablib
 
 # Create an istance on Daisy11 class to refer the L1 led
-myled = fox.Daisy11('D2','L1')
+myled = ablib.Daisy11('D2','L1')
 
 # Create an istance on Daisy5 class to refer the P1 push button
-mybutton = fox.Daisy5('D5','P1')
+mybutton = ablib.Daisy5('D5','P1')
 
 # Never ending loop
 while True:

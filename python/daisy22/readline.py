@@ -1,4 +1,4 @@
-import fox
+import ablib
 import time
 
 #Define which i2c_bus device driver to use
@@ -10,10 +10,10 @@ i2c_address=0x27
 
 #Create an istance of Daisy-22 class 
 #to for the gpio lines P0 to P3
-P0=fox.Daisy22(i2c_bus,i2c_address,0)
-P1=fox.Daisy22(i2c_bus,i2c_address,1)
-P2=fox.Daisy22(i2c_bus,i2c_address,2)
-P3=fox.Daisy22(i2c_bus,i2c_address,3)
+P0=ablib.Daisy22(i2c_bus,i2c_address,0)
+P1=ablib.Daisy22(i2c_bus,i2c_address,1)
+P2=ablib.Daisy22(i2c_bus,i2c_address,2)
+P3=ablib.Daisy22(i2c_bus,i2c_address,3)
 
 #Read the P0 line forever
 while True:

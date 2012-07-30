@@ -1,25 +1,25 @@
-import fox
+import ablib
 import time
 
 # Tests the first bits in input for Daisy18
 # Daisy18 module wired on D2 connector
 
 
-Mon1 = fox.Daisy11('D2','L1')
-Mon2 = fox.Daisy11('D2','L2')
-Mon3 = fox.Daisy11('D2','L3')
-Mon4 = fox.Daisy11('D2','L4')
+Mon1 = ablib.Daisy11('D2','L1')
+Mon2 = ablib.Daisy11('D2','L2')
+Mon3 = ablib.Daisy11('D2','L3')
+Mon4 = ablib.Daisy11('D2','L4')
 
-Act18 = fox.Daisy11('D2','L8')
-Act19 = fox.Daisy11('D2','L7')
+Act18 = ablib.Daisy11('D2','L8')
+Act19 = ablib.Daisy11('D2','L7')
 
-MonOk = fox.Daisy11('D2','L6')
-MonErr = fox.Daisy11('D2','L5')
+MonOk = ablib.Daisy11('D2','L6')
+MonErr = ablib.Daisy11('D2','L5')
 
 
-SlowTest = fox.Daisy5('D3','P5')
-SelD18 = fox.Daisy5('D3','P7')
-SelD19 = fox.Daisy5('D3','P8')
+SlowTest = ablib.Daisy5('D3','P5')
+SelD18 = ablib.Daisy5('D3','P7')
+SelD19 = ablib.Daisy5('D3','P8')
 
 testD18=False
 testD19=False
@@ -48,30 +48,30 @@ while selTest:
 	if SelD18.pressed():
 		testD18=True
 		selTest=False
-		In1 = fox.Daisy18('D5','first','I1')
-		In2 = fox.Daisy18('D5','first','I2')
-		In3 = fox.Daisy18('D5','first','I3')
-		In4 = fox.Daisy18('D5','first','I4')
+		In1 = ablib.Daisy18('D5','first','I1')
+		In2 = ablib.Daisy18('D5','first','I2')
+		In3 = ablib.Daisy18('D5','first','I3')
+		In4 = ablib.Daisy18('D5','first','I4')
 		 
-		Out1 = fox.Daisy19('D5','second','O1')
-		Out2 = fox.Daisy19('D5','second','O2')
-		Out3 = fox.Daisy19('D5','second','O3')
-		Out4 = fox.Daisy19('D5','second','O4')
+		Out1 = ablib.Daisy19('D5','second','O1')
+		Out2 = ablib.Daisy19('D5','second','O2')
+		Out3 = ablib.Daisy19('D5','second','O3')
+		Out4 = ablib.Daisy19('D5','second','O4')
 		Act18.on()
 		print "Start Test D18"
 
 	if SelD19.pressed():
 		testD19=True
 		selTest=False
-		In1 = fox.Daisy18('D5','second','I1')
-		In2 = fox.Daisy18('D5','second','I2')
-		In3 = fox.Daisy18('D5','second','I3')
-		In4 = fox.Daisy18('D5','second','I4')
+		In1 = ablib.Daisy18('D5','second','I1')
+		In2 = ablib.Daisy18('D5','second','I2')
+		In3 = ablib.Daisy18('D5','second','I3')
+		In4 = ablib.Daisy18('D5','second','I4')
 		 
-		Out1 = fox.Daisy19('D5','first','O1')
-		Out2 = fox.Daisy19('D5','first','O2')
-		Out3 = fox.Daisy19('D5','first','O3')
-		Out4 = fox.Daisy19('D5','first','O4')
+		Out1 = ablib.Daisy19('D5','first','O1')
+		Out2 = ablib.Daisy19('D5','first','O2')
+		Out3 = ablib.Daisy19('D5','first','O3')
+		Out4 = ablib.Daisy19('D5','first','O4')
 		Act19.on()
 		print "Start Test D19"
 		

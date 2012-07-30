@@ -1,10 +1,10 @@
-import fox
+import ablib
 import time
 
 # Define myled as the led labeled "L1" on the 
 # Daisy11 module wired on D2 connector
 
-myled = fox.Daisy11('D2','L1')
+myled = ablib.Daisy11('D2','L1')
  
 while True:
 	myled.on()

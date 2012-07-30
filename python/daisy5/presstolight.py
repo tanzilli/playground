@@ -1,31 +1,31 @@
 #!/usr/bin/python
 import time
-import daisy
+import ablib
  
 # Create a list of led istances on Daisy-11
 # Wire the Daisy-11 board on D2
 # Wire the Daisy-5 board on D5
 
 led = [
-	daisy.Daisy11('D2','L1'),
-	daisy.Daisy11('D2','L2'),
-	daisy.Daisy11('D2','L3'),
-	daisy.Daisy11('D2','L4'),
-	daisy.Daisy11('D2','L5'),
-	daisy.Daisy11('D2','L6'),
-	daisy.Daisy11('D2','L7'),
-	daisy.Daisy11('D2','L8'),
+	ablib.Daisy11('D2','L1'),
+	ablib.Daisy11('D2','L2'),
+	ablib.Daisy11('D2','L3'),
+	ablib.Daisy11('D2','L4'),
+	ablib.Daisy11('D2','L5'),
+	ablib.Daisy11('D2','L6'),
+	ablib.Daisy11('D2','L7'),
+	ablib.Daisy11('D2','L8'),
 ]
  
 button = [
-	daisy.Daisy5('D5','P1'),
-	daisy.Daisy5('D5','P2'),
-	daisy.Daisy5('D5','P3'),
-	daisy.Daisy5('D5','P4'),
-	daisy.Daisy5('D5','P5'),
-	daisy.Daisy5('D5','P6'),
-	daisy.Daisy5('D5','P7'),
-	daisy.Daisy5('D5','P8'),
+	ablib.Daisy5('D5','P1'),
+	ablib.Daisy5('D5','P2'),
+	ablib.Daisy5('D5','P3'),
+	ablib.Daisy5('D5','P4'),
+	ablib.Daisy5('D5','P5'),
+	ablib.Daisy5('D5','P6'),
+	ablib.Daisy5('D5','P7'),
+	ablib.Daisy5('D5','P8'),
 ]
 
 # Forever loop

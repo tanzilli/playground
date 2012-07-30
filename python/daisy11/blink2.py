@@ -1,6 +1,6 @@
 import time
 import thread
-import fox
+import ablib
 import threading
  
 # This is the function that will be executed as a thread  
@@ -14,12 +14,12 @@ def check_button(button,led):
  
 # Define myled as the led labeled "L1" on the 
 # Daisy11 module wired on D2 connector 
-myled = fox.Daisy11('D2','L1')
+myled = ablib.Daisy11('D2','L1')
 
 
 # Define mybutton as the press button labeled "P1" on the 
 # Daisy5 module wired on D5 connector 
-mybutton = fox.Daisy5('D5','P1')
+mybutton = ablib.Daisy5('D5','P1')
  
  
 # Launch the funcion check_button as a thread
@@ -28,7 +28,7 @@ thread.start_new_thread(check_button,(mybutton,myled))
  
 # The main program flow continues and makes the L8 blinking
 # to show you that it's running in parallel with the thread 
-blinking_led = fox.Daisy11('D2','L8')
+blinking_led = ablib.Daisy11('D2','L8')
  
 while True:
 	blinking_led.on()

@@ -1,17 +1,17 @@
-import fox
+import ablib
 import time
 
 # Define myled as the led labeled "L1" on the 
 # Daisy11 module wired on D2 connector
 
-Out1 = fox.Daisy19('D5','first','O1')
-Out2 = fox.Daisy19('D5','first','O2')
-Out3 = fox.Daisy19('D5','first','O3')
-Out4 = fox.Daisy19('D5','first','O4')
-Out5 = fox.Daisy19('D5','second','O1')
-Out6 = fox.Daisy19('D5','second','O2')
-Out7 = fox.Daisy19('D5','second','O3')
-Out8 = fox.Daisy19('D5','second','O4')
+Out1 = ablib.Daisy19('D5','first','O1')
+Out2 = ablib.Daisy19('D5','first','O2')
+Out3 = ablib.Daisy19('D5','first','O3')
+Out4 = ablib.Daisy19('D5','first','O4')
+Out5 = ablib.Daisy19('D5','second','O1')
+Out6 = ablib.Daisy19('D5','second','O2')
+Out7 = ablib.Daisy19('D5','second','O3')
+Out8 = ablib.Daisy19('D5','second','O4')
 
 
 

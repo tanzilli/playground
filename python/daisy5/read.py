@@ -6,18 +6,18 @@
 #http://www.acmesystems.it/DAISY-5
 
 import time
-import fox
+import ablib
 
 # Create an istance for each button
 
-P1 = fox.Daisy5('D5','P1')
-P2 = fox.Daisy5('D5','P2')
-P3 = fox.Daisy5('D5','P3')
-P4 = fox.Daisy5('D5','P4')
-P5 = fox.Daisy5('D5','P5')
-P6 = fox.Daisy5('D5','P6')
-P7 = fox.Daisy5('D5','P7')
-P8 = fox.Daisy5('D5','P8')
+P1 = ablib.Daisy5('D5','P1')
+P2 = ablib.Daisy5('D5','P2')
+P3 = ablib.Daisy5('D5','P3')
+P4 = ablib.Daisy5('D5','P4')
+P5 = ablib.Daisy5('D5','P5')
+P6 = ablib.Daisy5('D5','P6')
+P7 = ablib.Daisy5('D5','P7')
+P8 = ablib.Daisy5('D5','P8')
 
 while True:
 	if (P1.pressed()):

@@ -1,4 +1,4 @@
-import fox
+import ablib
 import time
 
 #Define which i2c_bus device driver to use
@@ -11,12 +11,12 @@ i2c_address=0x27
 #Create an istance of Daisy-22 class 
 #to manage the P0 line
  
-P0=fox.Daisy22(i2c_bus,i2c_address,0)
+P0=ablib.Daisy22(i2c_bus,i2c_address,0)
 
 #Create an istance of Daisy-22 class 
 #to manage the P1 line
  
-P1=fox.Daisy22(i2c_bus,i2c_address,1)
+P1=ablib.Daisy22(i2c_bus,i2c_address,1)
 
 #Turn on (1) and off (0) the GPIO line
 #each second

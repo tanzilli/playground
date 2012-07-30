@@ -1,4 +1,4 @@
-import fox
+import ablib
 import time
  
 # Daisy connector on which is wired the
@@ -7,14 +7,14 @@ connector = 'D2'
  
 # Create a list istances for all the leds
 led = [
-	fox.Daisy11(connector,'L1'),
-	fox.Daisy11(connector,'L2'),
-	fox.Daisy11(connector,'L3'),
-	fox.Daisy11(connector,'L4'),
-	fox.Daisy11(connector,'L5'),
-	fox.Daisy11(connector,'L6'),
-	fox.Daisy11(connector,'L7'),
-	fox.Daisy11(connector,'L8')
+	ablib.Daisy11(connector,'L1'),
+	ablib.Daisy11(connector,'L2'),
+	ablib.Daisy11(connector,'L3'),
+	ablib.Daisy11(connector,'L4'),
+	ablib.Daisy11(connector,'L5'),
+	ablib.Daisy11(connector,'L6'),
+	ablib.Daisy11(connector,'L7'),
+	ablib.Daisy11(connector,'L8')
 	]
  
 while True:                        # Forever loop

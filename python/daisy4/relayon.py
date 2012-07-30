@@ -1,5 +1,5 @@
-import fox
+import ablib
  
-myrelay = fox.Daisy4('D5','DIP1')
+myrelay = ablib.Daisy4('D5','DIP1')
 myrelay.on()
 

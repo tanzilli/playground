@@ -4,7 +4,7 @@ from os import curdir, sep
 import cgi
 import thread
 import threading
-import fox
+import ablib
 import time
 
 PORT_NUMBER = 8080
@@ -99,7 +99,7 @@ def WebServerThread():
 thread.start_new_thread(WebServerThread,())		
 
 # Use the L1 led on Daisy11 module
-ledL1=fox.Daisy11("D2","L1")
+ledL1=ablib.Daisy11("D2","L1")
 
 #Forever loop
 while True:

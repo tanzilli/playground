@@ -1,7 +1,7 @@
-import fox
+import ablib
 import time
 
-lcd = fox.Daisy24(0)
+lcd = ablib.Daisy24(0)
 
 while True:
 	for x in range(0,16,12):

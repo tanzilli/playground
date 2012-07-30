@@ -1,13 +1,13 @@
-import fox
+import ablib
 import time
 
 # Tests the first bits in input for Daisy18
 # Daisy18 module wired on D2 connector
 
-In1 = fox.Daisy18('D5','first','I1')
-In2 = fox.Daisy18('D5','first','I2')
-In3 = fox.Daisy18('D5','first','I3')
-In4 = fox.Daisy18('D5','first','I4')
+In1 = ablib.Daisy18('D5','first','I1')
+In2 = ablib.Daisy18('D5','first','I2')
+In3 = ablib.Daisy18('D5','first','I3')
+In4 = ablib.Daisy18('D5','first','I4')
  
 print "Start Test"
  
