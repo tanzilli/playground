@@ -5,7 +5,7 @@ setup(name='ablib',
 	author='Sergio Tanzilli',
 	author_email='tanzilli@acmesystems.it',
 	url='http://www.acmesystems.it',	
-	py_modules=['acmeboards']
+	py_modules=['ablib']
 	)
 
 
