@@ -327,8 +327,6 @@ D12_kernel_ids = {
 	'10':   0, #GND
 }
 
-
-
 # Kernel IDs descriptors for each connector
 connectors = {
 	'N'   :  aria_north,
