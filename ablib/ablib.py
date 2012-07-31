@@ -288,13 +288,13 @@ D8_kernel_ids = {
 #ARIAG25-EB Daisy connector D10
 D10_kernel_ids = {
 	'1' :   0, #3V3
-	'2' :  37, #PA5
-	'3' :  38, #PA6
-	'4' : 123, #PC27
-	'5' : 124, #PC28
-	'6' : 125, #PC29
-	'7' :  96, #PC0
-	'8' :  97, #PC1
+	'2' : 129, #PC22
+	'3' : 130, #PC23
+	'4' : 131, #PC24
+	'5' : 132, #PC25
+	'6' : 133, #PC26
+	'7' :  62, #PA30
+	'8' :  63, #PA31
 	'9' :   0, #5V0
 	'10':   0, #GND
 }
@@ -327,6 +327,62 @@ D12_kernel_ids = {
 	'10':   0, #GND
 }
 
+#ARIAG25-EB Daisy connector D13
+D13_kernel_ids = {
+	'1' :   0, #3V3
+	'2' :  37, #PA5
+	'3' :  38, #PA6
+	'4' : 123, #PC27
+	'5' : 124, #PC28
+	'6' : 125, #PC29
+	'7' :  96, #PC0
+	'8' :  97, #PC1
+	'9' :   0, #5V0
+	'10':   0, #GND
+}
+
+#ARIAG25-EB Daisy connector D14
+D14_kernel_ids = {
+	'1' :   0, #3V3
+	'2' :   0, #3V3
+	'3' :   0, #VREF
+	'4' :   0, #GND
+	'5' :  75, #PB11
+	'6' :  76, #PB12
+	'7' :  77, #PB13
+	'8' :  78, #PB14
+	'9' :   0, #5V0
+	'10':   0, #GND
+}
+
+#ARIAG25-EB Daisy connector D15
+D15_kernel_ids = {
+	'1' :   0, #3V3
+	'2' :  44, #PA12
+	'3' :  43, #PA11
+	'4' :  45, #PA13
+	'5' :  46, #PA14
+	'6' :  39, #PA7
+	'7' :  33, #PA1
+	'8' :   0, #N.C.
+	'9' :   0, #5V0
+	'10':   0, #GND
+}
+
+#ARIAG25-EB Daisy connector D16
+D16_kernel_ids = {
+	'1' :   0, #3V3
+	'2' :  56, #PA24
+	'3' :  57, #PA25
+	'4' :  58, #PA26
+	'5' :  59, #PA27
+	'6' :  60, #PA28
+	'7' :  61, #PA29
+	'8' :  63, #PA31.
+	'9' :  62, #PA30
+	'10':   0, #GND
+}
+
 # Kernel IDs descriptors for each connector
 connectors = {
 	'N'   :  aria_north,
@@ -346,6 +402,10 @@ connectors = {
 	'D10' :  D10_kernel_ids,
 	'D11' :  D11_kernel_ids,
 	'D12' :  D12_kernel_ids,
+	'D13' :  D13_kernel_ids,
+	'D14' :  D14_kernel_ids,
+	'D15' :  D15_kernel_ids,
+	'D16' :  D16_kernel_ids,
 }
 
 def get_kernel_id(connector_name,pin_number):
