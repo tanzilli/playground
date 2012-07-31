@@ -285,6 +285,20 @@ D8_kernel_ids = {
 	'10':   0, #GND
 }
 
+#ARIAG25-EB Daisy connector D11
+D11_kernel_ids = {
+	'1' :   0, #3V3
+	'2' : 112, #PC16
+	'3' : 113, #PC17
+	'4' : 114, #PC18
+	'5' : 115, #PC19
+	'6' : 116, #PC20
+	'7' : 117, #PC21
+	'8' :  98, #PC2
+	'9' :  99, #PC3
+	'10':   0, #GND
+}
+
 #ARIAG25-EB Daisy connector D12
 D12_kernel_ids = {
 	'1' :   0, #3V3
@@ -299,19 +313,6 @@ D12_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D15
-D15_kernel_ids = {
-	'1' :   0, #3V3
-	'2' : 112, #PC16
-	'3' : 113, #PC17
-	'4' : 114, #PC18
-	'5' : 115, #PC19
-	'6' : 116, #PC20
-	'7' : 117, #PC21
-	'8' :  98, #PC2
-	'9' :  99, #PC3
-	'10':   0, #GND
-}
 
 
 # Kernel IDs descriptors for each connector
