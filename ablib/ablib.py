@@ -2,8 +2,9 @@
 #
 # Python functions collection to easily manage the I/O lines and 
 # Daisy modules with the following Acme Systems boards:
-#   FOX Board G20
-#   Aria G25
+#   FOXG20
+#   ARIAG25
+#   ARIAG25-EB
 #
 # (C) 2012 Sergio Tanzilli <tanzilli@acmesystems.it>
 # (C) 2012 Acme Systems srl (http://www.acmesystems.it)
@@ -272,7 +273,7 @@ D7_kernel_ids = {
 }
 
 D8_kernel_ids = {
-	'1' :  0,  #3V3
+	'1' :   0, #3V3
 	'2' :  72, #PB8
 	'3' :  73, #PB9
 	'4' :   0, #N.C.
@@ -284,23 +285,38 @@ D8_kernel_ids = {
 	'10':   0, #GND
 }
 
-# Kernel IDs descriptors for each connector
+#ARIAG25-EB Daisy connector D12
+D12_kernel_ids = {
+	'1' :   0, #3V3
+	'2' : 104, #PC8
+	'3' : 105, #PC9
+	'4' : 106, #PC10
+	'5' : 107, #PC11
+	'6' : 108, #PC12
+	'7' : 109, #PC13
+	'8' : 110, #PC14
+	'9' : 111, #PC15
+	'10':   0, #GND
+}
 
+
+# Kernel IDs descriptors for each connector
 connectors = {
-	'N'  :  aria_north,
-	'E'  :  aria_east,
-	'S'  :  aria_south,
-	'W'  :  aria_west,
-	'J6' :  J6_kernel_ids,
-	'J7' :  J7_kernel_ids,
-	'D1' :  D1_kernel_ids,
-	'D2' :  D2_kernel_ids,
-	'D3' :  D3_kernel_ids,
-	'D4' :  D4_kernel_ids,
-	'D5' :  D5_kernel_ids,
-	'D6' :  D6_kernel_ids,
-	'D7' :  D7_kernel_ids,
-	'D8' :  D8_kernel_ids,
+	'N'   :  aria_north,
+	'E'   :  aria_east,
+	'S'   :  aria_south,
+	'W'   :  aria_west,
+	'J6'  :  J6_kernel_ids,
+	'J7'  :  J7_kernel_ids,
+	'D1'  :  D1_kernel_ids,
+	'D2'  :  D2_kernel_ids,
+	'D3'  :  D3_kernel_ids,
+	'D4'  :  D4_kernel_ids,
+	'D5'  :  D5_kernel_ids,
+	'D6'  :  D6_kernel_ids,
+	'D7'  :  D7_kernel_ids,
+	'D8'  :  D8_kernel_ids,
+	'D12' :  D12_kernel_ids,
 }
 
 def get_kernel_id(connector_name,pin_number):
