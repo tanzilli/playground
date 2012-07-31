@@ -331,8 +331,8 @@ connectors = {
 	'D6'  :  D6_kernel_ids,
 	'D7'  :  D7_kernel_ids,
 	'D8'  :  D8_kernel_ids,
+	'D11' :  D11_kernel_ids,
 	'D12' :  D12_kernel_ids,
-	'D15' :  D15_kernel_ids,
 }
 
 def get_kernel_id(connector_name,pin_number):
