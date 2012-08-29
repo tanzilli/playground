@@ -9,7 +9,7 @@ def menu():
 	print "1 - Quectel ON" 
 	print "2 - Quectel OFF" 
 	print "3 - Pulse on power key" 
-	print "4 - Send AT"
+	print "4 - Send a SMS"
 
 	print "a - USB A on/off" 
 	print "b - USB B on/off" 
@@ -25,6 +25,10 @@ quectel_power_key = ablib.Pin('E','10','low')
 usb_a_power = ablib.Pin('N','7','low')
 usb_b_power = ablib.Pin('N','8','low')
 usb_c_power = ablib.Pin('N','9','low')
+
+# Insert here the destination number
+send_to = "+393460624344"
+message = "Hello world !"
 
 while True:
 	menu()
@@ -73,15 +77,30 @@ while True:
 	if scelta=="4":
 		ser = serial.Serial(
 			port='/dev/ttyS1', 
-			baudrate=9600, 
+			baudrate=115200, 
 			timeout=5,
 			parity=serial.PARITY_NONE,
 			stopbits=serial.STOPBITS_ONE,
 			bytesize=serial.EIGHTBITS
 		)  
-		ser.write("ATH\r")
-		s = ser.read(10)
-		print s
+
+		ser.write("AT\r")
+		print ser.readlines()
+
+		ser.write("AT\r")
+		print ser.readlines()
+
+		ser.write("AT\r")
+		print ser.readlines()
+ 
+		ser.write("AT+CMGF=1\r")
+		print ser.readlines()
+
+		ser.write("AT+CMGS=" + "\"" + send_to + "\"" + "\r")
+		time.sleep(0.5);
+		ser.write(message + "\x1a")
+		time.sleep(1);
+		print ser.readlines()
 		ser.close()
 		
 	if scelta=="x":
