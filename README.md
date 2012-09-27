@@ -1,7 +1,10 @@
-# FOX Board G20 playground
+# Acme Boards programming examples
 
-This is a collection of programming examples for the Linux embedded SBC [FOX Board G20](http://www.acmesystems.it/?id=FOXG20). 
+This is a collection of programming examples for:
 
-To install and run this code on your FOX Board G20 follow this tutorial:
+* Linux embedded SoM [Aria G25](http://www.acmesystems.it/aria). 
+* Linux embedded SBC [FOX Board G20](http://www.acmesystems.it/FOXG20). 
 
-*  [Install and run FOX Board G20 playground source code examples](http://www.acmesystems.it/playground)
+To install and run these examples on your Acme Board follow this tutorial:
+
+*  [Install and run playground source code examples](http://www.acmesystems.it/playground)
