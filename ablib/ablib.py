@@ -464,11 +464,79 @@ class Pin():
 	def get_value(self):
 		return get_value(self.kernel_id)
 
+class Daisy2():
+
+	"""
+	DAISY-2 Stepper motor controller
+	http://www.acmesystems.it/DAISY-2
+	"""
+
+	ENABLE_kernel_id=-1
+	DIR_kernel_id=-1
+	STEP_kernel_id=-1
+	LOWPOWER_kernel_id=-1
+
+	control_line_low = {
+		'ENABLE'   :  '2',
+		'DIR'      :  '4',
+		'STEP'     :  '6',
+		'LOWPOWER' :  '8',
+	}
+
+	control_line_hi = {
+		'ENABLE'   :  '1',
+		'DIR'      :  '3',
+		'STEP'     :  '5',
+		'LOWPOWER' :  '9',
+	}
+
+	def __init__(self,connector_id,nibble):
+		if (nibble=="low"):
+			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_low["ENABLE"])
+			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_low["DIR"])
+			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_low["STEP"])
+			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_low["LOWPOWER"])
+		
+		if (nibble=="hi"):
+			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_hi["ENABLE"])
+			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_hi["DIR"])
+			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_hi["STEP"])
+			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_hi["LOWPOWER"])
+
+		export(self.ENABLE_kernel_id)
+		export(self.DIR_kernel_id)
+		export(self.STEP_kernel_id)
+		export(self.LOWPOWER_kernel_id)
+
+		direction(self.ENABLE_kernel_id,'high')
+		direction(self.DIR_kernel_id,'low')
+		direction(self.STEP_kernel_id,'low')
+		direction(self.LOWPOWER_kernel_id,'low')
+
+	def step_on(self):
+		set_value(self.STEP_kernel_id,1)
+		set_value(self.STEP_kernel_id,0)
+
+	def set_dir(self,value):
+		set_value(self.DIR_kernel_id,value)
+		
+	def enable_on(self):
+		set_value(self.ENABLE_kernel_id,0)
+
+	def enable_off(self):
+		set_value(self.ENABLE_kernel_id,1)
+
+	def lowpower_on(self):
+		set_value(self.LOWPOWER_kernel_id,0)
+
+	def lowpower_off(self):
+		set_value(self.LOWPOWER_kernel_id,1)
+
 class Daisy4():
 
 	"""
 	DAISY-4 (Relay module) related class
-	http://www.acmesystems.it/?id=DAISY-4
+	http://www.acmesystems.it/DAISY-4
 	"""
 	kernel_id=-1
 
@@ -511,7 +579,7 @@ class Daisy5():
 
 	"""
 	DAISY-5 (8 pushbuttons) related class
-	http://www.acmesystems.it/?id=DAISY-5
+	http://www.acmesystems.it/DAISY-5
 	kernel_id=-1
 	"""
 
@@ -559,7 +627,7 @@ class Daisy11():
 
 	"""
 	DAISY-11 (8 led) related class
-	http://www.acmesystems.it/?id=DAISY-11
+	http://www.acmesystems.it/DAISY-11
 	"""
 
 	kernel_id=-1
@@ -607,7 +675,7 @@ class Daisy15():
 
 	"""
 	DAISY-15 (4DSystems lcd display) related class
-	http://www.acmesystems.it/?id=DAISY-15
+	http://www.acmesystems.it/DAISY-15
 	"""
 
 	serial = None
@@ -636,7 +704,7 @@ class Daisy19():
 
 	"""
 	DAISY-19 (4 mosfet output) related class
-	http://www.acmesystems.it/?id=DAISY-19
+	http://www.acmesystems.it/DAISY-19
 	"""
 
 	kernel_id=-1
@@ -690,7 +758,7 @@ class Daisy22():
 
 	"""
 	DAISY-22 (8 bit I2C expander)
-	http://www.acmesystems.it/?id=DAISY-22
+	http://www.acmesystems.it/DAISY-22
 	"""
 
 	i2c_bus=-1
@@ -736,7 +804,7 @@ class Daisy24():
 
 	"""
 	DAISY-24 (16x2 LCD module)
-	http://www.acmesystems.it/?id=DAISY-24
+	http://www.acmesystems.it/DAISY-24
 	"""
 
 	i2c_bus=-1
