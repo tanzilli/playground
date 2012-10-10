@@ -476,14 +476,14 @@ class Daisy2():
 	STEP_kernel_id=-1
 	LOWPOWER_kernel_id=-1
 
-	control_line_low = {
+	control_line_A = {
 		'ENABLE'   :  '2',
 		'DIR'      :  '4',
 		'STEP'     :  '6',
 		'LOWPOWER' :  '8',
 	}
 
-	control_line_hi = {
+	control_line_B = {
 		'ENABLE'   :  '1',
 		'DIR'      :  '3',
 		'STEP'     :  '5',
@@ -491,17 +491,17 @@ class Daisy2():
 	}
 
 	def __init__(self,connector_id,nibble):
-		if (nibble=="low"):
-			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_low["ENABLE"])
-			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_low["DIR"])
-			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_low["STEP"])
-			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_low["LOWPOWER"])
+		if (nibble=="A"):
+			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_A["ENABLE"])
+			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_A["DIR"])
+			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_A["STEP"])
+			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_A["LOWPOWER"])
 		
-		if (nibble=="hi"):
-			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_hi["ENABLE"])
-			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_hi["DIR"])
-			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_hi["STEP"])
-			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_hi["LOWPOWER"])
+		if (nibble=="B"):
+			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_B["ENABLE"])
+			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_B["DIR"])
+			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_B["STEP"])
+			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_B["LOWPOWER"])
 
 		export(self.ENABLE_kernel_id)
 		export(self.DIR_kernel_id)

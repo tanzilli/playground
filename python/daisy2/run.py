@@ -1,7 +1,7 @@
 import ablib
 import time
 
-motor1 = ablib.Daisy2('D5','low')
+motor1 = ablib.Daisy2('D5','A')
 motor1.enable_on()
 
 while True:
