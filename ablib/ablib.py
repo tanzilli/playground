@@ -484,9 +484,9 @@ class Daisy2():
 	}
 
 	control_line_B = {
-		'ENABLE'   :  '1',
-		'DIR'      :  '3',
-		'STEP'     :  '5',
+		'ENABLE'   :  '3',
+		'DIR'      :  '5',
+		'STEP'     :  '7',
 		'LOWPOWER' :  '9',
 	}
 
