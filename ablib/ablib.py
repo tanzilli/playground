@@ -526,11 +526,13 @@ class Daisy2():
 	def enable_off(self):
 		set_value(self.ENABLE_kernel_id,1)
 
-	def lowpower_on(self):
-		set_value(self.LOWPOWER_kernel_id,0)
-
-	def lowpower_off(self):
+	def lowpower(self):
+		time.sleep(0.1)
 		set_value(self.LOWPOWER_kernel_id,1)
+
+	def hipower(self):
+		set_value(self.LOWPOWER_kernel_id,0)
+		time.sleep(0.1)
 
 class Daisy4():
 
