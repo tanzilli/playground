@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #MAGNETOMETER (COMPASS)
-#Read the internal register
+#Read the internal registers
 
 import smbus
 
@@ -23,6 +23,8 @@ hmc5883l_register = {
 
 i2c_bus=smbus.SMBus(0)
 i2c_address=0x1E
+
+print "Registers read from the magnetometer chip"
 
 for key in sorted(hmc5883l_register.keys()):
 	i2c_bus.write_byte(i2c_address,hmc5883l_register[key])		

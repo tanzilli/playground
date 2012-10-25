@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #GYROSCOPE
-#Read the internal register
+#Read the internal registers
 
 import smbus
 
@@ -35,6 +35,8 @@ l3g4200d_register = {
 
 i2c_bus=smbus.SMBus(0)
 i2c_address=0x68
+
+print "Registers read from the gyroscope chip"
 
 for key in sorted(l3g4200d_register.keys()):
 	i2c_bus.write_byte(i2c_address,l3g4200d_register[key])		

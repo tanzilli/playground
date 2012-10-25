@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #ACCELEROMETER
-#Read the internal register
+#Read the internal registers
 
 import smbus
 
@@ -33,6 +33,8 @@ lis331dlh_register = {
 
 i2c_bus=smbus.SMBus(0)
 i2c_address=0x18
+
+print "Registers read from the accelerometer chip"
 
 for key in sorted(lis331dlh_register.keys()):
 	i2c_bus.write_byte(i2c_address,lis331dlh_register[key])		
