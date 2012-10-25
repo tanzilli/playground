@@ -1,4 +1,7 @@
-#Magnetometer example
+#!/usr/bin/python
+
+#MAGNETOMETER (COMPASS)
+#Read the internal register
 
 import smbus
 

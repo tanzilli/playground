@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+#GYROSCOPE
+#Read the internal register
+
 import smbus
 
 l3g4200d_register = {

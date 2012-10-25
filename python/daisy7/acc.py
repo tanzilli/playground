@@ -1,4 +1,7 @@
-#MEMS digital output motion sensor example
+#!/usr/bin/python
+
+#ACCELEROMETER
+#Read the internal register
 
 import smbus
 

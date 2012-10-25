@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+#GPS
+#Read NMEA messages
+
 import serial
 import sys
 

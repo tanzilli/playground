@@ -1,8 +1,11 @@
+#!/usr/bin/python
+
+#BAROMETER (PRESSURE SENSOR)
+#Read the internal register
+
 import smbus
 
 i2c_bus=smbus.SMBus(0)
-
-# Read the calibration coefficients of BMP085
 
 i2c_address=0x77
 for i in range(0xAA,0xBF+1):
