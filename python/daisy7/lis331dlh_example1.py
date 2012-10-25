@@ -31,8 +31,8 @@ lis331dlh_register = {
 i2c_bus=smbus.SMBus(0)
 i2c_address=0x18
 
-for key in sorted(l3g4200d_register.keys()):
-	i2c_bus.write_byte(i2c_address,l3g4200d_register[key])		
+for key in sorted(lis331dlh_register.keys()):
+	i2c_bus.write_byte(i2c_address,lis331dlh_register[key])		
 	print "%s=0x%02X" % (key,i2c_bus.read_byte(i2c_address))
 
 
