@@ -15,7 +15,7 @@ i2c_address=0x68
 
 for key in sorted(l3g4200d_register.keys()):
 	i2c_bus.write_byte(i2c_address,l3g4200d_register[key])		
-	sys.stdout.write "%s=0x%02X " % (key,i2c_bus.read_byte(i2c_address))
+	sys.stdout.write ("%s=0x%02X " % (key,i2c_bus.read_byte(i2c_address)))
 	print ""
 
 
