@@ -418,6 +418,13 @@ def export(kernel_id):
 		f.write(str(kernel_id))
 		f.close()
 
+def unexport(kernel_id):
+	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	if os.path.exists(iopath): 
+		f = open('/sys/class/gpio/unexport','w')
+		f.write(str(kernel_id))
+		f.close()
+
 def direction(kernel_id,direct):
 	iopath='/sys/class/gpio/gpio' + str(kernel_id)
 	if os.path.exists(iopath): 
@@ -440,6 +447,34 @@ def get_value(kernel_id):
 			a=f.read()
 			f.close()
 			return int(a)
+
+def soft_pwm_export(kernel_id):
+	iopath='/sys/class/soft_pwm/pwm' + str(kernel_id)
+	if not os.path.exists(iopath): 
+		f = open('/sys/class/soft_pwm/export','w')
+		f.write(str(kernel_id))
+		f.close()
+
+def soft_pwm_period(kernel_id,value):
+	iopath='/sys/class/soft_pwm/pwm' + str(kernel_id)
+	if os.path.exists(iopath): 
+		f = open(iopath + '/period','w')
+		f.write(str(value))
+		f.close()
+
+def soft_pwm_pulse(kernel_id,value):
+	iopath='/sys/class/soft_pwm/pwm' + str(kernel_id)
+	if os.path.exists(iopath): 
+		f = open(iopath + '/pulse','w')
+		f.write(str(value))
+		f.close()
+
+def soft_pwm_steps(kernel_id,value):
+	iopath='/sys/class/soft_pwm/pwm' + str(kernel_id)
+	if os.path.exists(iopath): 
+		f = open(iopath + '/pulses','w')
+		f.write(str(value))
+		f.close()
 
 class Pin():
 	"""
@@ -490,14 +525,14 @@ class Daisy2():
 		'LOWPOWER' :  '9',
 	}
 
-	def __init__(self,connector_id,nibble):
-		if (nibble=="A"):
+	def __init__(self,connector_id,S1="A",period=1400,pulse=700):
+		if (S1=="A"):
 			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_A["ENABLE"])
 			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_A["DIR"])
 			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_A["STEP"])
 			self.LOWPOWER_kernel_id = get_kernel_id(connector_id,self.control_line_A["LOWPOWER"])
 		
-		if (nibble=="B"):
+		if (S1=="B"):
 			self.ENABLE_kernel_id = get_kernel_id(connector_id,self.control_line_B["ENABLE"])
 			self.DIR_kernel_id = get_kernel_id(connector_id,self.control_line_B["DIR"])
 			self.STEP_kernel_id = get_kernel_id(connector_id,self.control_line_B["STEP"])
@@ -505,25 +540,25 @@ class Daisy2():
 
 		export(self.ENABLE_kernel_id)
 		export(self.DIR_kernel_id)
-		export(self.STEP_kernel_id)
+		unexport(self.STEP_kernel_id)
+		soft_pwm_export(self.STEP_kernel_id)
 		export(self.LOWPOWER_kernel_id)
 
 		direction(self.ENABLE_kernel_id,'high')
 		direction(self.DIR_kernel_id,'low')
-		direction(self.STEP_kernel_id,'low')
 		direction(self.LOWPOWER_kernel_id,'low')
 
-	def step_on(self):
-		set_value(self.STEP_kernel_id,1)
-		set_value(self.STEP_kernel_id,0)
+		self.steps(0)
+		self.period(period)
+		self.pulse(pulse)
 
-	def set_dir(self,value):
+	def direction(self,value):
 		set_value(self.DIR_kernel_id,value)
 		
-	def enable_on(self):
+	def enable(self):
 		set_value(self.ENABLE_kernel_id,0)
 
-	def enable_off(self):
+	def disable(self):
 		set_value(self.ENABLE_kernel_id,1)
 
 	def lowpower(self):
@@ -533,6 +568,18 @@ class Daisy2():
 	def hipower(self):
 		set_value(self.LOWPOWER_kernel_id,0)
 		time.sleep(0.1)
+
+	def period(self,value):
+		soft_pwm_period(self.STEP_kernel_id,value)
+
+	def pulse(self,value):
+		soft_pwm_pulse(self.STEP_kernel_id,value)
+
+	def steps(self,value):
+		soft_pwm_steps(self.STEP_kernel_id,value)
+
+	def stop(self):
+		soft_pwm_steps(self.STEP_kernel_id,0)
 
 class Daisy4():
 
