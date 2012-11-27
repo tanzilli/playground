@@ -1,0 +1,6 @@
+#!/bin/sh
+git pull
+cd ablib
+python setup.py install
+cd ..
+
