@@ -1,111 +1,234 @@
 import ablib
 import time
 import serial
- 
-def menu():
-	print ""
-	print "Test ARIAG25-EB"
-	print "----------------------"
-	print "1 - Quectel ON" 
-	print "2 - Quectel OFF" 
-	print "3 - Pulse on power key" 
-	print "4 - Send a SMS"
+import sys
+import select
 
-	print "a - USB A on/off" 
-	print "b - USB B on/off" 
-	print "c - USB B on/off" 
+def heardEnter():
+	i,o,e = select.select([sys.stdin],[],[],0.0001)
+	for s in i:
+		if s == sys.stdin:
+			input = sys.stdin.readline()
+			return True
+	return False
 
-	print "x - Esci" 
-	print "----------------------"
- 
- 
+def modem_tests():
+	# Insert here the destination number
+	send_to = "+393460624344"
+	message = "Hello world !"
+
+	while True:
+		print ""
+		print "Modem tests"
+		print "----------------------"
+		print "1 - Modem power section ON" 
+		print "2 - Modem power section OFF" 
+		print "3 - Send a pulse on modem power_key" 
+		print "4 - Send a SMS"
+		print "q - Quit"
+		print "----------------------"
+
+		test_to_run=raw_input("Select:")
+		if test_to_run=="q":
+			return
+		print " "
+
+		if test_to_run=="1":
+			print "Modem power section ON"
+			quectel_power.on()
+
+		if test_to_run=="2":
+			print "Modem power section OFF"
+			quectel_power.off()
+
+		if test_to_run=="3":
+			print "Send a pulse on modem power_key"
+			quectel_power_key.on()
+			time.sleep(1)
+			quectel_power_key.off()
+
+		if test_to_run=="4":
+			print "Send [%s] SMS to [%s]" % (message,send_to)
+			ser = serial.Serial(
+				port='/dev/ttyS1', 
+				baudrate=115200, 
+				timeout=5,
+				parity=serial.PARITY_NONE,
+				stopbits=serial.STOPBITS_ONE,
+				bytesize=serial.EIGHTBITS
+			)  
+
+			ser.write("AT\r")
+			print ser.readlines()
+
+			ser.write("AT\r")
+			print ser.readlines()
+
+			ser.write("AT\r")
+			print ser.readlines()
+	 
+			ser.write("AT+CMGF=1\r")
+			print ser.readlines()
+
+			ser.write("AT+CMGS=" + "\"" + send_to + "\"" + "\r")
+			time.sleep(0.5);
+			ser.write(message + "\x1a")
+			time.sleep(1);
+			print ser.readlines()
+			ser.close()
+
+
+def usb_tests():
+	while True:
+		print ""
+		print "USB tests"
+		print "----------------------"
+		print "a - Toggle USB A power"
+		print "b - Toggle USB B power"
+		print "c - Toggle USB C power"
+		print "q - Quit"
+		print "----------------------"
+
+		test_to_run=raw_input("Select:")
+		if test_to_run=="q":
+			return
+		print " "
+
+		if test_to_run=="a":
+			if usb_a_power.get_value()==0:
+				print "USB A on"
+				usb_a_power.on()
+			else:
+				print "USB A off"
+				usb_a_power.off()
+
+		if test_to_run=="b":
+			if usb_b_power.get_value()==0:
+				print "USB B on"
+				usb_b_power.on()
+			else:
+				print "USB B off"
+				usb_b_power.off()
+
+		if test_to_run=="c":
+			if usb_c_power.get_value()==0:
+				print "USB C on"
+				usb_c_power.on()
+			else:
+				print "USB C off"
+				usb_c_power.off()
+
+def slide(kid_dictionary):
+	for key in sorted(kid_dictionary.iterkeys()):
+		if kid_dictionary[key]!=0:
+			print "%s: %s" % (key,kid_dictionary[key])
+			ablib.export(kid_dictionary[key])
+			ablib.direction(kid_dictionary[key],"out")
+			ablib.set_value(kid_dictionary[key],0)
+
+	for key in sorted(kid_dictionary.iterkeys()):
+		if kid_dictionary[key]!=0:
+			ablib.set_value(kid_dictionary[key],1)
+			time.sleep(0.2)
+
+	for key in sorted(kid_dictionary.iterkeys()):
+		if kid_dictionary[key]!=0:
+			ablib.set_value(kid_dictionary[key],0)
+			time.sleep(0.2)
+
+
+
+def d_tests():
+	while True:
+		print ""
+		print "Daisy connector tests"
+		print "----------------------"
+		print "0 - D10"
+		print "1 - D11"
+		print "2 - D12"
+		print "3 - D13"
+		print "4 - D14"
+		print "5 - D15"
+		print "6 - D16"
+		print "q - Quit"
+		print "----------------------"
+
+		test_to_run=raw_input("Select:")
+		if test_to_run=="q":
+			return
+		print " "
+
+		connector="D1"+test_to_run;
+
+		if connector=="D10":
+			print "Connector D10"
+			kid_dictionary=ablib.D10_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D11":
+			print "Connector D11"
+			kid_dictionary=ablib.D11_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D12":
+			print "Connector D12"
+			kid_dictionary=ablib.D12_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D13":
+			print "Connector D13"
+			kid_dictionary=ablib.D13_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D14":
+			print "Connector D14"
+			kid_dictionary=ablib.D14_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D15":
+			print "Connector D15"
+			kid_dictionary=ablib.D15_kernel_ids
+			slide(kid_dictionary)
+
+		if connector=="D16":
+			print "Connector D16"
+			kid_dictionary=ablib.D16_kernel_ids
+			slide(kid_dictionary)
+
 quectel_power = ablib.Pin('W','10','low')
 quectel_power_key = ablib.Pin('E','10','low')
 
-usb_a_power = ablib.Pin('N','7','low')
-usb_b_power = ablib.Pin('N','8','low')
-usb_c_power = ablib.Pin('N','9','low')
+usb_a_power = ablib.Pin('N','7','high')
+usb_b_power = ablib.Pin('N','8','high')
+usb_c_power = ablib.Pin('N','9','high')
 
-# Insert here the destination number
-send_to = "+393460624344"
-message = "Hello world !"
 
 while True:
-	menu()
-	scelta=raw_input("Scegli:")
+
+	print ""
+	print "Terra tests"
+	print "----------------------"
+	print "m - Modem tests" 
+	print "u - USB tests" 
+	print "d - Daisy connector tests" 
+	print "q - Quit"
+	print "----------------------"
+
+	test_to_run=raw_input("Select:")
+	if test_to_run=="q":
+		print "Goodbye cruel world !"
+		quit()
 	print " "
 
-	if scelta=="a":
-		if usb_a_power.get_value()==0:
-			print "USB A on"
-			usb_a_power.on()
-		else:
-			print "USB A off"
-			usb_a_power.off()
+	if test_to_run=="m":
+		modem_tests()
 
-	if scelta=="b":
-		if usb_b_power.get_value()==0:
-			print "USB B on"
-			usb_b_power.on()
-		else:
-			print "USB B off"
-			usb_b_power.off()
+	if test_to_run=="u":
+		usb_tests()
 
-	if scelta=="c":
-		if usb_c_power.get_value()==0:
-			print "USB C on"
-			usb_c_power.on()
-		else:
-			print "USB C off"
-			usb_c_power.off()
-
-	if scelta=="1":
-		print "Accendo il Quectel"
-		quectel_power.on()
-
-	if scelta=="2":
-		print "Spengo il Quectel"
-		quectel_power.off()
-
-	if scelta=="3":
-		print "Pulse on power key"
-		quectel_power_key.on()
-		time.sleep(1)
-		quectel_power_key.off()
-		print "End of pulse"
-
-	if scelta=="4":
-		ser = serial.Serial(
-			port='/dev/ttyS1', 
-			baudrate=115200, 
-			timeout=5,
-			parity=serial.PARITY_NONE,
-			stopbits=serial.STOPBITS_ONE,
-			bytesize=serial.EIGHTBITS
-		)  
-
-		ser.write("AT\r")
-		print ser.readlines()
-
-		ser.write("AT\r")
-		print ser.readlines()
-
-		ser.write("AT\r")
-		print ser.readlines()
- 
-		ser.write("AT+CMGF=1\r")
-		print ser.readlines()
-
-		ser.write("AT+CMGS=" + "\"" + send_to + "\"" + "\r")
-		time.sleep(0.5);
-		ser.write(message + "\x1a")
-		time.sleep(1);
-		print ser.readlines()
-		ser.close()
+	if test_to_run=="d":
+		d_tests()
 		
-	if scelta=="x":
-		print "Addio mondo crudele !"
-		quit()
 
 
 
