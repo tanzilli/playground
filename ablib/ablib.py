@@ -2,9 +2,9 @@
 #
 # Python functions collection to easily manage the I/O lines and 
 # Daisy modules with the following Acme Systems boards:
-#   FOXG20
-#   ARIAG25
-#   ARIAG25-EB
+# TERRA Board (http://www.acmesystems.it/terra)
+# FOX Board G20 (http://www.acmesystems.it/FOXG20)
+# ARIA G25 (http://www.acmesystems.it/aria) 
 #
 # (C) 2012 Sergio Tanzilli <tanzilli@acmesystems.it>
 # (C) 2012 Acme Systems srl (http://www.acmesystems.it)
@@ -285,7 +285,7 @@ D8_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D10
+#Terra D10
 D10_kernel_ids = {
 	'1' :   0, #3V3
 	'2' : 118, #PC22
@@ -299,7 +299,7 @@ D10_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D11
+#Terra D11
 D11_kernel_ids = {
 	'1' :   0, #3V3
 	'2' : 112, #PC16
@@ -313,7 +313,7 @@ D11_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D12
+#Terra D12
 D12_kernel_ids = {
 	'1' :   0, #3V3
 	'2' : 104, #PC8
@@ -327,7 +327,7 @@ D12_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D13
+#Terra D13
 D13_kernel_ids = {
 	'1' :   0, #3V3
 	'2' :  37, #PA5
@@ -341,7 +341,7 @@ D13_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D14
+#Terra D14
 D14_kernel_ids = {
 	'1' :   0, #3V3
 	'2' :   0, #3V3
@@ -355,7 +355,7 @@ D14_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D15
+#Terra D15
 D15_kernel_ids = {
 	'1' :   0, #3V3
 	'2' :  44, #PA12
@@ -369,7 +369,7 @@ D15_kernel_ids = {
 	'10':   0, #GND
 }
 
-#ARIAG25-EB Daisy connector D16
+#Terra D16
 D16_kernel_ids = {
 	'1' :   0, #3V3
 	'2' :  61, #PA29
