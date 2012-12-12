@@ -720,6 +720,134 @@ class Daisy11():
 		else:
 			return False
 
+
+class Daisy14():
+
+	"""
+	DAISY-14 (I2C LCD adapter)
+	http://www.acmesystems.it/DAISY-14
+	"""
+
+	i2c_bus=-1
+	i2c_address = -1
+	backled = -1
+	rs = -1
+	e = -1
+
+	def __init__(self,bus_id=0,i2c_address=0x20):
+		self.i2c_address = i2c_address
+		self.i2c_bus = smbus.SMBus(bus_id)
+		self.rs=Daisy22(bus_id,i2c_address,4)
+		self.e=Daisy22(bus_id,i2c_address,5)
+		self.rs.off()
+		self.e.off()
+		time.sleep(0.015)
+
+		#LCD initialization sequence
+        #http://web.alfredstate.edu/weimandn/lcd/lcd_initialization/lcd_initialization_index.html
+
+		self.sendnibble(0x03)
+		self.sendnibble(0x03)
+		self.sendnibble(0x03)
+		self.sendnibble(0x02)
+
+		#4 bit interface
+		#2 lines display
+		self.sendcommand(0x28)
+
+		#Command ENTRY MODE SET
+		#Increase 0x02
+		#Display is shifted 0x01
+		self.sendcommand(0x06+0x02)
+
+		#Command DISPLAY ON/OFF
+		#Display ON   0x04
+		#Cursor OFF   0x02
+		#Blinking OFF 0x01
+		self.sendcommand(0x08+0x04)
+
+		#Command DISPLAY CLEAR
+		self.sendcommand(0x01)
+
+		self.backled=Daisy22(bus_id,i2c_address,6)
+		return
+
+	def e_strobe(self):
+		self.e.on()
+		self.e.off()
+		
+	def sendnibble(self,value):
+		currentvalue=self.i2c_bus.read_byte(self.i2c_address)
+		self.i2c_bus.write_byte(self.i2c_address,value&0x0F|currentvalue&0xF0)
+		self.e_strobe()
+		return
+
+	def sendcommand(self,value):
+		self.rs.off()
+		self.sendnibble((value>>4)&0x0F)
+		self.sendnibble(value&0x0F)
+		return
+
+	def senddata(self,value):
+		self.rs.on()
+		self.sendnibble((value>>4)&0x0F)
+		self.sendnibble(value&0x0F)
+		return
+
+	def clear(self):
+		"""
+		Clear the display content
+		"""
+		self.sendcommand(0x01)
+		time.sleep(0.001)
+		return
+
+	def home(self):
+		"""
+		Place the curson at home position
+		"""
+		self.sendcommand(0x03)
+		time.sleep(0.001)
+		return
+
+	def setcurpos(self,x,y):
+		if y<0 or y>3:
+			return
+		if x<0 or x>19:
+			return
+
+		if y==0:
+			self.sendcommand(0x80+0x00+x)
+		if y==1:
+			self.sendcommand(0x80+0x40+x)
+		if y==2:
+			self.sendcommand(0x80+0x14+x)
+		if y==3:
+			self.sendcommand(0x80+0x54+x)
+		return
+
+	def putchar(self,value):
+		self.senddata(value)
+		return
+
+	def putstring(self,string):
+		if len(string)==0:
+			return
+		if len(string)>20:
+			string=string[0:20]
+
+		for char in string:
+			self.putchar(ord(char))
+		return
+
+	def backlighton(self):
+		self.backled.on()
+		return
+
+	def backlightoff(self):
+		self.backled.off()
+		return
+
 class Daisy15():
 
 	"""
