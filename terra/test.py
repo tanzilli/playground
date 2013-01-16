@@ -4,13 +4,20 @@ import serial
 import sys
 import select
 
-def heardEnter():
-	i,o,e = select.select([sys.stdin],[],[],0.0001)
-	for s in i:
-		if s == sys.stdin:
-			input = sys.stdin.readline()
-			return True
-	return False
+class _GetchUnix:
+	def __init__(self):
+		import tty, sys
+	def __call__(self):
+		import sys, tty, termios
+		fd = sys.stdin.fileno()
+		old_settings = termios.tcgetattr(fd)
+		try:
+			tty.setraw(sys.stdin.fileno())
+			ch = sys.stdin.read(1)
+		finally:
+			termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+			print "ciao"
+		return ch
 
 def modem_tests():
 	# Insert here the destination number
@@ -28,7 +35,8 @@ def modem_tests():
 		print "q - Quit"
 		print "----------------------"
 
-		test_to_run=raw_input("Select:")
+		print "Select:",
+		test_to_run=getch()
 		if test_to_run=="q":
 			return
 		print " "
@@ -89,7 +97,8 @@ def usb_tests():
 		print "q - Quit"
 		print "----------------------"
 
-		test_to_run=raw_input("Select:")
+		print "Select:",
+		test_to_run=getch()
 		if test_to_run=="q":
 			return
 		print " "
@@ -153,7 +162,8 @@ def d_tests():
 		print "q - Quit"
 		print "----------------------"
 
-		test_to_run=raw_input("Select:")
+		print "Select:",
+		test_to_run=getch()
 		if test_to_run=="q":
 			return
 		print " "
@@ -202,7 +212,7 @@ usb_a_power = ablib.Pin('N','7','high')
 usb_b_power = ablib.Pin('N','8','high')
 usb_c_power = ablib.Pin('N','9','high')
 
-
+getch=_GetchUnix()
 while True:
 
 	print ""
@@ -214,7 +224,8 @@ while True:
 	print "q - Quit"
 	print "----------------------"
 
-	test_to_run=raw_input("Select:")
+	print "Select: ",
+	test_to_run=getch()
 	if test_to_run=="q":
 		print "Goodbye cruel world !"
 		quit()
@@ -228,7 +239,4 @@ while True:
 
 	if test_to_run=="d":
 		d_tests()
-		
-
-
 
