@@ -2,6 +2,7 @@ import ablib
 import time
 
 lcd = ablib.Daisy24(0)
+lcd.backlighton()
 
 while True:
 	lcd.clear()
