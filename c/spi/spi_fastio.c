@@ -215,7 +215,7 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		// Sezione DAC con AD5317
+		// Sezione DAC con AD5307
 		// Genera un'onda triangolare
 /*		for (ch=0;ch<4;ch++) { 
 			// Se AD5307
