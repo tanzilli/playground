@@ -184,7 +184,7 @@ int main(int argc, char * argv[])
 	for (;;) { 
 		// Sezione ADC
 
-		/*for (ch=0;ch<8;ch++) { 
+		for (ch=0;ch<8;ch++) { 
 			// Write a data
 			*((unsigned long *)mapped_SPI0_TDR_addr) = (ch<<11);
 			mydelay();
@@ -198,7 +198,7 @@ int main(int argc, char * argv[])
 
 			printf("%04d ",((unsigned int)ul)&0x00000FFF);
 		}
-		printf("\n");*/
+		printf("\n");
 
 		
 		// Sezione DAC con AD5317
