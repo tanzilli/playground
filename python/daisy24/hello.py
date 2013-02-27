@@ -5,4 +5,3 @@ lcd = ablib.Daisy24(0)
 lcd.backlighton()
 lcd.putstring("Hello World !")
 
-
