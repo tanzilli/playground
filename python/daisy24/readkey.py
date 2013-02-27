@@ -5,7 +5,7 @@ import time
 #0x27 for PCF8474 T
 #0x3F for PCF8474 AT
  
-LCD_ADDRESS = 0x3F
+LCD_ADDRESS = 0x27
 
 lcd = ablib.Daisy24(0,LCD_ADDRESS)
 
