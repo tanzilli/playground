@@ -1,7 +1,13 @@
 import ablib
 import time
 
-lcd = ablib.Daisy24(0,0x27)
+#Daisy-24 I/O expander chip address. Use:
+#0x27 for PCF8474 T
+#0x3F for PCF8474 AT
+ 
+LCD_ADDRESS = 0x3F
+
+lcd = ablib.Daisy24(0,LCD_ADDRESS)
 
 while True:
 	if lcd.pressed(0):
