@@ -9,3 +9,9 @@ This is a collection of programming examples for:
 To install and run these examples on your Acme Board follow this tutorial:
 
 *  [Install and run playground source code examples](http://www.acmesystems.it/playground)
+
+#Directory contents
+
+* **\ablib** Python module to easily manage the I/O lines and Daisy modules
+* **\python** Examples in Python
+* **\test** Factory test utilities
