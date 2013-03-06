@@ -1,4 +1,4 @@
-#Terra board benchtest
+#Factory Terra board benchtest
 
 #Power control on USB ports
 #D10 to D16 daisy connectors
@@ -15,7 +15,7 @@ import thread
 import threading
 
 class _GetchUnix:
-  def __init__(self):
+	def __init__(self):
 		import tty, sys
 	def __call__(self):
 		import sys, tty, termios
