@@ -877,6 +877,62 @@ class Daisy15():
 		self.serial.write("s%c%c%c%c%c%s%c" % (int(row),int(col),2,0xFF,0xFF,str,0x00))		
 		rtc = self.serial.read(1)
 
+class Daisy18():
+
+	"""
+	DAISY-18 (4 mosfet input) related class
+	http://www.acmesystems.it/DAISY-18
+	"""
+
+	kernel_id=-1
+
+	outputs_first = {
+		'CH1' :  '2',
+		'CH2' :  '3',
+		'CH3' :  '4',
+		'CH4' :  '5',
+		'I1'  :  '2',
+		'I2'  :  '3',
+		'I3'  :  '4',
+		'I4'  :  '5',
+	}
+
+	outputs_second = {
+		'CH1' :  '6',
+		'CH2' :  '7',
+		'CH3' :  '8',
+		'CH4' :  '9',
+		'I1'  :  '6',
+		'I2'  :  '7',
+		'I3'  :  '8',
+		'I4'  :  '9',
+	}
+
+	def __init__(self,connector_id,position,output_id):
+		if (position=="first"): 
+			pin=self.outputs_first[output_id]
+		else:
+			pin=self.outputs_second[output_id]
+			
+		self.kernel_id = get_kernel_id(connector_id,pin)
+
+		if (self.kernel_id!=0):
+			export(self.kernel_id)
+			direction(self.kernel_id,'inp')
+
+	def state(self):
+		if self.kernel_id<>-1:
+			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+			if os.path.exists(iopath): 
+				f = open(iopath + '/value','r')
+				a=f.read()
+				f.close()
+				if int(a)==0:
+					return False
+				else:
+					return True
+		return False
+
 class Daisy19():
 
 	"""
@@ -891,6 +947,10 @@ class Daisy19():
 		'CH2' :  '3',
 		'CH3' :  '4',
 		'CH4' :  '5',
+		'O1'  :  '2',
+		'O2'  :  '3',
+		'O3'  :  '4',
+		'O4'  :  '5',
 	}
 
 	outputs_second = {
@@ -898,6 +958,10 @@ class Daisy19():
 		'CH2' :  '7',
 		'CH3' :  '8',
 		'CH4' :  '9',
+		'O1'  :  '6',
+		'O2'  :  '7',
+		'O3'  :  '8',
+		'O4'  :  '9',
 	}
 
 	def __init__(self,connector_id,position,output_id):
