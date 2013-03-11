@@ -3,7 +3,6 @@
 #Power control on USB ports
 #D10 to D16 daisy connectors
 #GPRS Modem
-
 #To use this program it is requested to have a full gpio Kernel image
 
 import ablib
@@ -32,33 +31,9 @@ def modem_tests():
 	# Insert here the destination number
 	send_to = "+393460624344"
 	message = "Hello world !"
-
-	print "Modem power section ON"
-	quectel_power.off()
-	time.sleep(1)
-	quectel_power.on()
-	time.sleep(1)
-	print "Send a pulse on modem power_key"
-	quectel_power_key.on()
-	time.sleep(1)
-	quectel_power_key.off()
 	print "Wait..."
 	time.sleep(5)
 	print "Send [%s] SMS to [%s]" % (message,send_to)
-	ser = serial.Serial(
-		port='/dev/ttyS1', 
-		baudrate=115200, 
-		timeout=5,
-		parity=serial.PARITY_NONE,
-		stopbits=serial.STOPBITS_ONE,
-		bytesize=serial.EIGHTBITS
-	)  
-	ser.write("AT\r")
-	print ser.readlines()
-	ser.write("AT\r")
-	print ser.readlines()
-	ser.write("AT\r")
-	print ser.readlines()
 	ser.write("AT+CMGF=1\r")
 	print ser.readlines()
 	ser.write("AT+CMGS=" + "\"" + send_to + "\"" + "\r")
@@ -66,7 +41,6 @@ def modem_tests():
 	ser.write(message + "\x1a")
 	time.sleep(1);
 	print ser.readlines()
-	ser.close()
 	return
 
 def slide(kid_dictionary,a):
@@ -85,7 +59,18 @@ def slide(kid_dictionary,a):
 				time.sleep(0.01)
 
 
-quectel_power = ablib.Pin('W','10','low')
+def modem_terminal(serial,string,timeout):
+	serial.flushInput()
+	serial.write(string)
+	while timeout>0:
+		if serial.inWaiting()>0:
+			sys.stdout.write(serial.read(serial.inWaiting()))
+		time.sleep(0.001)
+		timeout=timeout-1
+	print ""
+
+
+quectel_power = ablib.Pin('W','10','high')
 quectel_power_key = ablib.Pin('E','10','low')
 
 usb_a_power = ablib.Pin('N','7','high')
@@ -107,13 +92,26 @@ thread.start_new_thread(slide,(kid_dictionary,1))
 kid_dictionary=ablib.D16_kernel_ids
 thread.start_new_thread(slide,(kid_dictionary,1))
 
+ttyS1 = serial.Serial(
+	port='/dev/ttyS1', 
+	baudrate=9600, 
+	timeout=0.5,
+	parity=serial.PARITY_NONE,
+	stopbits=serial.STOPBITS_ONE,
+	bytesize=serial.EIGHTBITS
+)  
+
+
 getch=_GetchUnix()
 while True:
 
 	print ""
 	print "Terra tests"
 	print "----------------------"
-	print "m - Modem tests" 
+	print "1 - Modem ON" 
+	print "2 - Check serial link (Send AT on /dev/ttyS1)" 
+	print "4 - Modem OFF" 
+	print "s - Send a SMS" 
 	print "a - Toggle USB A power" 
 	print "b - Toggle USB A power" 
 	print "c - Toggle USB A power" 
@@ -123,9 +121,47 @@ while True:
 	print "Select: ",
 	test_to_run=getch()
 	if test_to_run=="q":
+		ttyS1.close()
 		print "Goodbye cruel world !"
 		quit()
 	print " "
+
+	#Modem ON
+	if test_to_run=="1":
+		print "Modem power section ON"
+		quectel_power.on()
+		time.sleep(1)
+		print "Send a power key pulse to the modem"
+		quectel_power_key.on()
+		time.sleep(1)
+		quectel_power_key.off()
+
+	#Test serial link
+	if test_to_run=="2":
+		modem_terminal(ttyS1,"AT\r",200)
+
+	#Make a call to myself
+	#if test_to_run=="3":
+	#	modem_terminal(ttyS1,"ATDT404\r",10000)
+
+	#Send a SMS
+	if test_to_run=="s":
+		send_to = "+393460624344"
+		message = "Hello world !"
+		print "Wait..."
+		time.sleep(5)
+		print "Send [%s] SMS to [%s]" % (message,send_to)
+		ttyS1.write("AT+CMGF=1\r")
+		print ttyS1.readlines()
+		ttyS1.write("AT+CMGS=" + "\"" + send_to + "\"" + "\r")
+		time.sleep(0.5);
+		ttyS1.write(message + "\x1a")
+		time.sleep(1);
+		print ttyS1.readlines()
+
+	#Modem OFF
+	if test_to_run=="4":
+		quectel_power.off()
 
 	if test_to_run=="m":
 		modem_tests()
