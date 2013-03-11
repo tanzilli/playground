@@ -886,7 +886,7 @@ class Daisy18():
 
 	kernel_id=-1
 
-	outputs_first = {
+	inputs_first = {
 		'CH1' :  '2',
 		'CH2' :  '3',
 		'CH3' :  '4',
@@ -897,7 +897,7 @@ class Daisy18():
 		'I4'  :  '5',
 	}
 
-	outputs_second = {
+	inputs_second = {
 		'CH1' :  '6',
 		'CH2' :  '7',
 		'CH3' :  '8',
@@ -908,17 +908,17 @@ class Daisy18():
 		'I4'  :  '9',
 	}
 
-	def __init__(self,connector_id,position,output_id):
+	def __init__(self,connector_id,position,inputs_id):
 		if (position=="first"): 
-			pin=self.outputs_first[output_id]
+			pin=self.inputs_first[inputs_id]
 		else:
-			pin=self.outputs_second[output_id]
+			pin=self.inputs_second[inputs_id]
 			
 		self.kernel_id = get_kernel_id(connector_id,pin)
 
 		if (self.kernel_id!=0):
 			export(self.kernel_id)
-			direction(self.kernel_id,'inp')
+			direction(self.kernel_id,'in')
 
 	def state(self):
 		if self.kernel_id<>-1:
