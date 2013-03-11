@@ -6,7 +6,7 @@
 # FOX Board G20 (http://www.acmesystems.it/FOXG20)
 # ARIA G25 (http://www.acmesystems.it/aria) 
 #
-# (C) 2012 Sergio Tanzilli <tanzilli@acmesystems.it>
+# (C) 2013 Sergio Tanzilli <tanzilli@acmesystems.it>
 # (C) 2012 Acme Systems srl (http://www.acmesystems.it)
 #
 # This program is free software; you can redistribute it and/or modify
@@ -887,17 +887,17 @@ class Daisy19():
 	kernel_id=-1
 
 	outputs_first = {
-		'O1' :  '2',
-		'O2' :  '3',
-		'O3' :  '4',
-		'O4' :  '5',
+		'CH1' :  '2',
+		'CH2' :  '3',
+		'CH3' :  '4',
+		'CH4' :  '5',
 	}
 
 	outputs_second = {
-		'O1' :  '6',
-		'O2' :  '7',
-		'O3' :  '8',
-		'O4' :  '9',
+		'CH1' :  '6',
+		'CH2' :  '7',
+		'CH3' :  '8',
+		'CH4' :  '9',
 	}
 
 	def __init__(self,connector_id,position,output_id):
