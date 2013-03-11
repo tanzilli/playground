@@ -8,11 +8,12 @@ import os
 #0x3F for PCF8474 AT
 LCD_ADDRESS = 0x3F
 
-ch1 = ablib.Daisy19("D2","first","01")
-ch2 = ablib.Daisy19("D2","first","02")
-ch3 = ablib.Daisy19("D2","first","03")
-ch4 = ablib.Daisy19("D2","first","04")
+ch1 = ablib.Daisy19("D2","first","CH1")
+ch2 = ablib.Daisy19("D2","first","CH2")
+ch3 = ablib.Daisy19("D2","first","CH3")
+ch4 = ablib.Daisy19("D2","first","CH4")
 
+lcd = ablib.Daisy24(0,LCD_ADDRESS)
 lcd.backlighton()
 lcd.setcurpos(6,0)
 lcd.putstring("TEST")
