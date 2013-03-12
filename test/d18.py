@@ -37,6 +37,26 @@ lcd.putstring("D-18")
 
 ch=0
 while True:
+	if lcd.pressed(0)==True:
+		ch1.on()
+		ch2.on()
+		ch3.on()
+		ch4.on()
+		while lcd.pressed(1)==False:
+			pass
+		ch1.off()
+		ch2.off()
+		ch3.off()
+		ch4.off()
+
+	if lcd.pressed(3)==True:
+		ch1.off()
+		ch2.off()
+		ch3.off()
+		ch4.off()
+		while lcd.pressed(2)==False:
+			pass
+
 	if ch==0:
 		err=False
 		ch1.on()
