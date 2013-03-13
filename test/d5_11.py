@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #Factory test for Daisy-5 and Daisy-11 boards
 
-import ablid
+import ablib
 import time
  
 daisy11_connector = 'D2'
