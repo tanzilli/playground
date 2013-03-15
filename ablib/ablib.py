@@ -927,7 +927,7 @@ class Daisy18():
 		'I1'  :  '2',
 		'I2'  :  '3',
 		'I3'  :  '4',
-		'I4'  :  '5',
+		'I4'  :  '5'
 	}
 
 	inputs_second = {
@@ -938,7 +938,7 @@ class Daisy18():
 		'I1'  :  '6',
 		'I2'  :  '7',
 		'I3'  :  '8',
-		'I4'  :  '9',
+		'I4'  :  '9'
 	}
 
 	def __init__(self,connector_id,position,inputs_id):
