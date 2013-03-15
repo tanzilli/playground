@@ -18,6 +18,9 @@ try:
 	import os.path
 	import smbus
 	import time
+	from serial import Serial
+	import fcntl
+	import struct
 except:
 	pass
 
@@ -28,7 +31,9 @@ serial_ports = {
 	'D3' :  '/dev/ttyS1',
 	'D5' :  '/dev/ttyS6',
 	'D6' :  '/dev/ttyS4',
-	'D8' :  '/dev/ttyS3'
+	'D8' :  '/dev/ttyS3',
+	'D10':  '/dev/ttyS4',
+	'D13':  '/dev/ttyS2'
 }
 
 		
@@ -671,6 +676,27 @@ class Daisy5():
 	def off(self):
 		if self.handler_off!=0: 
 			self.handler_off()
+
+class Daisy10(Serial):
+
+	"""
+	DAISY-10 (RS422/RS485) related class
+	http://www.acmesystems.it/DAISY-10'
+	"""
+
+	global serial_ports
+
+	def __init__(self, *args, **kwargs):
+		print serial_ports[kwargs.get('port')]
+		kwargs['port'] = serial_ports[kwargs.get('port')]
+		Serial.__init__(self, *args, **kwargs)
+		self.buf = ''
+
+	def mode(self,mode):
+		if mode=="RS485":
+			fd=self.fileno()
+			serial_rs485 = struct.pack('hhhhhhhh', 1, 0, 0, 0, 0, 0, 0, 0)
+			fcntl.ioctl(fd,0x542F,serial_rs485)
 
 class Daisy11():
 
