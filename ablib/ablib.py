@@ -687,15 +687,22 @@ class Daisy10(Serial):
 	global serial_ports
 
 	def __init__(self, *args, **kwargs):
-		print serial_ports[kwargs.get('port')]
+		#print serial_ports[kwargs.get('port')]
 		kwargs['port'] = serial_ports[kwargs.get('port')]
 		Serial.__init__(self, *args, **kwargs)
 		self.buf = ''
 
 	def mode(self,mode):
 		if mode=="RS485":
+			#Read these doc to understand this part
+			#http://lxr.free-electrons.com/source/Documentation/serial/serial-rs485.txt
+			#http://docs.python.org/2/library/struct.html
 			fd=self.fileno()
 			serial_rs485 = struct.pack('hhhhhhhh', 1, 0, 0, 0, 0, 0, 0, 0)
+			fcntl.ioctl(fd,0x542F,serial_rs485)
+		if mode=="RS422":
+			fd=self.fileno()
+			serial_rs485 = struct.pack('hhhhhhhh', 0, 0, 0, 0, 0, 0, 0, 0)
 			fcntl.ioctl(fd,0x542F,serial_rs485)
 
 class Daisy11():
