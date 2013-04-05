@@ -3,16 +3,27 @@
 addrList();
 
 function addrList() {
-	$sql = "SELECT * FROM addressbook";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$query = "%".$query."%";  
-		$stmt->bindParam("query", $query);
-		$stmt->execute();
-		$wines = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo $wines;
+		echo "<table border='1'>";
+		foreach($db->query("SELECT * FROM addressbook") as $row) {
+			echo "<tr>";
+			echo "<td>";
+			echo $row['name']; 
+			echo "</td>";
+
+			echo "<td>";
+			echo $row['phone']; 
+			echo "</td>";
+
+			echo "<td>";
+			echo "<a href='http://" . $row['website'] . "'>";
+			echo $row['website']; 
+			echo "</a>";
+			echo "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
 	} catch(PDOException $e) {
 		echo "DB error:" . $e->getMessage(); 
 	}
