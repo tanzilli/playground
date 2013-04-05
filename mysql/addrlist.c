@@ -12,10 +12,21 @@ int main(int argc, char **argv)
 	int num_fields;
 	int i;
 
-	conn = mysql_init(NULL);
-	mysql_real_connect(conn, "localhost", "root", "ariag25", "mydb", 0, NULL, 0);
+	if ((conn = mysql_init(NULL))==NULL) {
+		fprintf(stderr, "Failed on mysql_init()\n");
+		exit(1);
+	}
 
-	mysql_query(conn, "SELECT * FROM addressbook");
+	if (mysql_real_connect(conn, "127.0.0.1", "root", "ariag25", "mydb", 3306, NULL, 0)==NULL) {
+		fprintf(stderr, "Failed to connect to database: Error: %s\n", mysql_error(conn));
+		exit(1);
+	}
+
+	if (mysql_query(conn, "SELECT * FROM addressbook")!=0) {
+		fprintf(stderr, "Failed on SQL Query: %s\n", mysql_error(conn));
+		exit(1);
+	}
+
 	result = mysql_store_result(conn);
 
 	num_fields = mysql_num_fields(result);
@@ -28,4 +39,5 @@ int main(int argc, char **argv)
 	}
 	mysql_free_result(result);
 	mysql_close(conn);
+	exit(0);
 }
