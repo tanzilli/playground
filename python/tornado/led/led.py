@@ -19,7 +19,7 @@ application = tornado.web.Application([
 ])
 
 if __name__ == "__main__":
-	led = myled = ablib.Daisy11('D11','L1')
+	led = ablib.Daisy11('D11','L1')
 
 	application.listen(8080,"0.0.0.0")
 	tornado.ioloop.IOLoop.instance().start()
