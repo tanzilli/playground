@@ -2,7 +2,7 @@ import tornado.ioloop
 import tornado.web
 
 application = tornado.web.Application([
-	(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index1.html"})
+	(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index.html"})
 ])
 
 if __name__ == "__main__":
