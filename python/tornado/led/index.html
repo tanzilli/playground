@@ -1,4 +1,22 @@
-<ul>
-<li><a href="/ledon">Led ON</a></li>
-<li><a href="/ledoff">Led OFF</a></li>
-</ul>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Led controller</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+	function sendCmd(cmd) {
+		$.ajax({
+		  url: cmd,
+		});
+	}
+	</script>
+</head>
+<body>
+	<fieldset style="width: 120px;">
+		<legend>Led control panel</legend>
+		<button onclick=sendCmd("/ledon")>ON</button>
+		<button onclick=sendCmd("/ledoff")>OFF</button>
+	</fieldset>
+</body>
+</html>
