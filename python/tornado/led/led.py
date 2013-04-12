@@ -4,13 +4,15 @@ import ablib
 
 class ledon(tornado.web.RequestHandler):
 	def get(self):
-		print "Led ON"
 		led.on() 
+		print "Led ON"
+		self.write("Led ON")
 
 class ledoff(tornado.web.RequestHandler):
 	def get(self):
-		print "Led OFF"
 		led.off() 
+		print "Led OFF"
+		self.write("Led OFF")
 
 application = tornado.web.Application([
 	(r"/ledon", ledon),
