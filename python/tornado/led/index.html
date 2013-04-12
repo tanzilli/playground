@@ -7,16 +7,27 @@
     <script>
 	function sendCmd(cmd) {
 		$.ajax({
-		  url: cmd,
+			url: cmd,
+			success: function( data ) {
+				$("#state_line").text(data);
+			},
+			error: function () {
+				$("#state_line").text("Error");
+			}
 		});
 	}
 	</script>
 </head>
 <body>
-	<fieldset style="width: 120px;">
+	<fieldset style="width: 220px;">
 		<legend>Led control panel</legend>
 		<button onclick=sendCmd("/ledon")>ON</button>
 		<button onclick=sendCmd("/ledoff")>OFF</button>
 	</fieldset>
+	
+	<br/>
+	<label>Last status message:</label>
+	<br/>
+	<span id="state_line"/></span>
 </body>
 </html>
