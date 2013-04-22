@@ -1,5 +1,6 @@
-#Prova
+#Chip datasheets
 
-This code has been tested with this chip:
+Code tested with:
 
-* [Analog device DAC AD5713](http://www.analog.com/en/digital-to-analog-converters/da-converters/ad5317/products/product.html)
+* [Analog Device DAC AD5713](http://www.acmesystems.it/datasheets/ad5317.pdf)
+* [Texas Instruments ADC ADC128S052](http://www.acmesystems.it/datasheets/adc128s052.pdf)
