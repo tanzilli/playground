@@ -613,7 +613,6 @@ class Daisy4():
 			export(self.kernel_id)
 			direction(self.kernel_id,'low')
 
-
 	def on(self):
 		if (self.kernel_id!=0):
 			set_value(self.kernel_id,1)
@@ -626,7 +625,6 @@ class Daisy4():
 			set_value(self.kernel_id,0)
 		else:
 			pass
-	
 	
 	
 class Daisy5():
@@ -676,6 +674,63 @@ class Daisy5():
 	def off(self):
 		if self.handler_off!=0: 
 			self.handler_off()
+
+class Daisy8():
+
+	"""
+	DAISY-8 (2 Relay - 2 input module) related class
+	http://www.acmesystems.it/DAISY-8
+	"""
+	kernel_id=-1
+
+	line_first = {
+		'RL0' :  '2',
+		'RL1' :  '3',
+		'IN0' :  '4',
+		'IN1' :  '5',
+	}
+
+	line_second = {
+		'RL0' :  '6',
+		'RL1' :  '7',
+		'IN0' :  '8',
+		'IN1' :  '9',
+	}
+
+	def __init__(self,connector_id,position,id):
+		if (position=="first"): 
+			pin=self.line_first[id]
+		else:
+			pin=self.line_second[id]
+			
+		self.kernel_id = get_kernel_id(connector_id,pin)
+
+		if (self.kernel_id!=0 and id[0:2]=="RL"):
+			export(self.kernel_id)
+			direction(self.kernel_id,'low')
+
+		if (self.kernel_id!=0 and id[0:2]=="IN"):
+			export(self.kernel_id)
+			direction(self.kernel_id,'in')
+
+	def on(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,1)
+		else:
+			pass
+		
+	def off(self):
+		if (self.kernel_id!=0):
+			set_value(self.kernel_id,0)
+		else:
+			pass
+
+	def get(self):
+		if get_value(self.kernel_id):
+			return True
+		else:
+			return False
+
 
 class Daisy10(Serial):
 
