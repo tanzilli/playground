@@ -6,7 +6,8 @@
 import serial
 import sys
 
-serialdevice = "/dev/ttyS2"
+#Daisy-7 on FOX.D6 or TERRA.D10
+serialdevice = "/dev/ttyS4"
 
 #Open the serial port 
 ser = serial.Serial(
