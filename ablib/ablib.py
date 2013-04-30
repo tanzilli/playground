@@ -453,6 +453,14 @@ def get_value(kernel_id):
 			f.close()
 			return int(a)
 
+def set_edge(kernel_id,value):
+	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	if os.path.exists(iopath): 
+		if value in ('none', 'rising', 'falling', 'both'):
+		    f = open(iopath + '/edge','w')
+		    f.write(value)
+		    f.close()
+
 def soft_pwm_export(kernel_id):
 	iopath='/sys/class/soft_pwm/pwm' + str(kernel_id)
 	if not os.path.exists(iopath): 
@@ -632,8 +640,9 @@ class Daisy5():
 	"""
 	DAISY-5 (8 pushbuttons) related class
 	http://www.acmesystems.it/DAISY-5
-	kernel_id=-1
 	"""
+	kernel_id=-1
+	fd=-1
 
 	buttons = {
 		'P1' :  '2',
@@ -653,6 +662,10 @@ class Daisy5():
 		if (self.kernel_id!=0):
 			export(self.kernel_id)
 			direction(self.kernel_id,'in')
+
+		iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+		if os.path.exists(iopath): 
+			self.fd = open(iopath + '/value','r')
 
 	def pressed(self):
 		if self.kernel_id<>-1:
@@ -674,6 +687,10 @@ class Daisy5():
 	def off(self):
 		if self.handler_off!=0: 
 			self.handler_off()
+
+	def set_edge(self,value):
+		set_edge(self.kernel_id,value)
+		return False
 
 class Daisy8():
 
