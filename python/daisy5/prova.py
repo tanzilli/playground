@@ -6,6 +6,21 @@ import select, time, ablib
 import thread
 import threading
 
+connector = 'D12'
+
+led = [
+	ablib.Daisy11(connector,'L1'),
+	ablib.Daisy11(connector,'L2'),
+	ablib.Daisy11(connector,'L3'),
+	ablib.Daisy11(connector,'L4'),
+	ablib.Daisy11(connector,'L5'),
+	ablib.Daisy11(connector,'L6'),
+	ablib.Daisy11(connector,'L7'),
+	ablib.Daisy11(connector,'L8')
+	]
+
+rolling_on=True
+
 def check_button(fd,callback):
 	po = select.epoll()
 	po.register(fd,select.EPOLLET)
@@ -13,27 +28,38 @@ def check_button(fd,callback):
 		events = po.poll()
 		callback()
 
-def tasto_P1():
-	print "Tasto P1 premuto"
+def start():
+	global rolling_on
+	print "Start"
+	rolling_on=True
 
-def tasto_P2():
-	print "Tasto P2 rilasciato"
+def stop():
+	global rolling_on
+	print "Stop"
+	rolling_on=False
 
 P1=ablib.Daisy5('D11','P1')
 P1.set_edge("rising")
 
 P2=ablib.Daisy5('D11','P2')
-P2.set_edge("falling")
+P2.set_edge("rising")
 
 
-thread.start_new_thread(check_button,(P1.fd,tasto_P1))
-thread.start_new_thread(check_button,(P2.fd,tasto_P2))
+thread.start_new_thread(check_button,(P1.fd,start))
+thread.start_new_thread(check_button,(P2.fd,stop))
 
 
 i=0
 while True:
-	time.sleep(1)
-	print i
-	i=i+1
-	pass
+	for i in range (0,8):
+		while rolling_on==False:
+			pass
+		led[i].on()
+		time.sleep(0.1)
+ 
+	for i in range (0,8):
+		while rolling_on==False:
+			pass
+		led[i].off()
+		time.sleep(0.1)
 
