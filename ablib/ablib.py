@@ -698,7 +698,7 @@ class Daisy5():
 			set_edge(self.kernel_id,value)
 			thread.start_new_thread(self.wait_edge,(self.fd,callback))
 			return
-		else		
+		else:		
 			thread.exit()
 
 class Daisy8():
