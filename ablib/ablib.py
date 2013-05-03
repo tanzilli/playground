@@ -21,6 +21,9 @@ try:
 	from serial import Serial
 	import fcntl
 	import struct
+	import thread
+	import threading
+	import select
 except:
 	pass
 
@@ -641,9 +644,9 @@ class Daisy5():
 	DAISY-5 (8 pushbuttons) related class
 	http://www.acmesystems.it/DAISY-5
 	"""
-	kernel_id=-1
-	fd=-1
-
+	kernel_id=None
+	fd=None
+	
 	buttons = {
 		'P1' :  '2',
 		'P2' :  '3',
@@ -659,38 +662,42 @@ class Daisy5():
 		pin=self.buttons[button_id]
 		self.kernel_id = get_kernel_id(connector_id,pin)
 
-		if (self.kernel_id!=0):
+		if (self.kernel_id!=None):
 			export(self.kernel_id)
 			direction(self.kernel_id,'in')
 
-		iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
-		if os.path.exists(iopath): 
-			self.fd = open(iopath + '/value','r')
-
-	def pressed(self):
-		if self.kernel_id<>-1:
 			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
 			if os.path.exists(iopath): 
-				f = open(iopath + '/value','r')
-				a=f.read()
-				f.close()
-				if int(a)==0:
-					return False
-				else:
-					return True
+				self.fd = open(iopath + '/value','r')
+
+	def pressed(self):
+		return self.get()
+
+	def get(self):
+		if self.fd!=None:
+			self.fd.seek(0)
+			a=self.fd.read()
+			if int(a)==0:
+				return False
+			else:
+				return True
 		return False
 
-	def on(self):
-		if self.handler_on!=0: 
-			self.handler_on()
+	def wait_edge(self,fd,callback):
+		counter=0	
+		po = select.epoll()
+		po.register(fd,select.EPOLLET)
+		while True:
+			events = po.poll()
+			if counter>0:	
+				callback()
+			counter=counter+1
 
-	def off(self):
-		if self.handler_off!=0: 
-			self.handler_off()
-
-	def set_edge(self,value):
-		set_edge(self.kernel_id,value)
-		return False
+	def set_edge(self,value,callback):
+		if self.fd!=None:
+			set_edge(self.kernel_id,value)
+			thread.start_new_thread(self.wait_edge,(self.fd,callback))
+			return
 
 class Daisy8():
 
