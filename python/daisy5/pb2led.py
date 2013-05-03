@@ -1,4 +1,3 @@
-import time
 import ablib
 
 # Create an istance on Daisy5 class to refer the P1 push button
