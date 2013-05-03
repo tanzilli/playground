@@ -1,5 +1,3 @@
-#!/usr/bin/python
-import time
 import ablib
  
 # Create a list of led istances on Daisy-11
@@ -28,8 +26,6 @@ led = [
 	ablib.Daisy11(connector_leds,'L7'),
 	ablib.Daisy11(connector_leds,'L8'),
 ]
- 
-
 
 # Forever loop
 while True:
