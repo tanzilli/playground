@@ -494,14 +494,19 @@ def soft_pwm_steps(kernel_id,value):
 
 class Pin():
 	"""
-	FOX pins related class
+	FOX and AriaG25 pins related class
 	"""
-	kernel_id=-1
-
+	kernel_id=None
+	fd=None
+	
 	def __init__(self,connector_id,pin_name,direct):
 		self.kernel_id=get_kernel_id(connector_id,pin_name)
 		export(self.kernel_id)
 		direction(self.kernel_id,direct)
+		
+		iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+		if os.path.exists(iopath): 
+			self.fd = open(iopath + '/value','r')
 
 	def on(self):
 		set_value(self.kernel_id,1)
@@ -514,6 +519,25 @@ class Pin():
 
 	def get_value(self):
 		return get_value(self.kernel_id)
+
+	def wait_edge(self,fd,callback):
+		counter=0	
+		po = select.epoll()
+		po.register(fd,select.EPOLLET)
+		while True:
+			events = po.poll()
+			if counter>0:	
+				callback()
+			counter=counter+1
+
+	def set_edge(self,value,callback):
+		if self.fd!=None:
+			set_edge(self.kernel_id,value)
+			thread.start_new_thread(self.wait_edge,(self.fd,callback))
+			return
+		else:		
+			thread.exit()
+
 
 class Daisy2():
 
