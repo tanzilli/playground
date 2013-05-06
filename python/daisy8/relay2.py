@@ -1,8 +1,8 @@
 import ablib
 import time
 
-RL0_A = ablib.Daisy8(connector='D11',id='RL0')
-RL1_A = ablib.Daisy8(connector='D11',id='RL1')
+RL0_A = ablib.Daisy8(connector='D11',id='RL0',position='first')
+RL1_A = ablib.Daisy8(connector='D11',id='RL1',position='first')
 RL0_B = ablib.Daisy8(connector='D11',id='RL0',position='second')
 RL1_B = ablib.Daisy8(connector='D11',id='RL1',position='second')
  
