@@ -1,10 +1,7 @@
-#!/usr/bin/python
-#http://www.acmesystems.it/sqlite
-
 import time
-from pysqlite2 import dbapi2 as sqlite
+import sqlite3
  
-connection = sqlite.connect('/root/mydb.sqlite')
+connection = sqlite3.connect('mydb.sqlite')
 cursor = connection.cursor()
 cursor.execute('SELECT * FROM tbl1')
 
@@ -13,5 +10,3 @@ for row in cursor:
 
 connection.commit()
 connection.close()
- 
-
