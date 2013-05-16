@@ -499,7 +499,7 @@ class Pin():
 	kernel_id=None
 	fd=None
 	
-	def __init__(self,connector_id,pin_name,direct):
+	def __init__(self,connector_id,pin_name,direct="low"):
 		self.kernel_id=get_kernel_id(connector_id,pin_name)
 		export(self.kernel_id)
 		direction(self.kernel_id,direct)
