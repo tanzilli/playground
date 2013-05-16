@@ -20,7 +20,6 @@ def P2_pressed():
 	connection.commit()
 	connection.close()
 
-
 P1 = ablib.Daisy5('D11','P1')
 P1.set_edge("rising",P1_pressed)
 
