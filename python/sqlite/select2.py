@@ -6,9 +6,7 @@ cursor = connection.cursor()
 cursor.execute("SELECT strftime('%d/%m/%Y %H:%M:%S',timestamp),description FROM events;")
 
 for row in cursor:
-	print "  Timestamp:",row[0]
-	print "Description:",row[1]
-	print " "	
+	print "%s [%s]" % (row[0],row[1])
 
 connection.commit()
 connection.close()
