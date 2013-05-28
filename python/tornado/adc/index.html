@@ -1,0 +1,114 @@
+<!DOCTYPE html >
+<html>
+<head>
+<script src="js/tween-min.js"></script>
+<script src="js/steelseries-min.js"></script>
+
+
+<title>Banco di test NETUSPS1</title>
+</head>
+
+<body>
+<h1>Banco di test NETUSPS1</h1>
+ 
+<canvas id="ch0_cvs" width="200" height="150">[No canvas support]</canvas>
+<canvas id="ch1_cvs" width="200" height="150">[No canvas support]</canvas>
+<canvas id="ch2_cvs" width="200" height="150">[No canvas support]</canvas>
+<canvas id="ch3_cvs" width="200" height="150">[No canvas support]</canvas>
+    
+<script>
+	var ws = new WebSocket("ws://" + location.host + "/websocket");
+	var ch0_gauge;
+	var ch1_gauge;
+	var ch2_gauge;
+	var ch3_gauge;
+
+	ws.onopen = function() 	{  
+        console.log("connected"); 
+	}; 
+ 
+	ws.onmessage = function (message) {
+		var objJSON;
+		var strJSON;
+
+		strJSON=message.data;
+		objJSON=eval('('+strJSON+')');
+		
+		ch0_gauge.setValue(objJSON.ch0);
+		ch1_gauge.setValue(objJSON.ch1);
+		ch2_gauge.setValue(objJSON.ch2);
+		ch3_gauge.setValue(objJSON.ch3);
+	};
+ 
+	ws.onclose = function()	{
+        console.log("disconnected"); 
+	};
+ 
+	sendMessage = function(message) {
+        ws.send(message);
+	};
+
+	window.onload = function (e) {
+		
+        // Define some sections
+        var sections = [steelseries.Section(0, 25, 'rgba(0, 0, 220, 0.3)'),
+                        steelseries.Section(25, 50, 'rgba(0, 220, 0, 0.3)'),
+                        steelseries.Section(50, 75, 'rgba(220, 220, 0, 0.3)')];
+
+		// Define one area
+		areas = [steelseries.Section(8, 12, 'rgba(220, 0, 0, 0.3)')];
+
+		
+		ch0_gauge = new steelseries.Radial('ch0_cvs', {
+							gaugeType: steelseries.GaugeType.TYPE4,
+							maxValue:0,
+							maxValue:10,
+							size: 201,
+							section: sections,
+							area: areas,
+							titleString: "CH 0",
+							unitString: "Volt",
+							threshold: 50,
+							lcdVisible: true
+		});
+		ch1_gauge = new steelseries.Radial('ch1_cvs', {
+							gaugeType: steelseries.GaugeType.TYPE4,
+							maxValue:0,
+							maxValue:10,
+							size: 201,
+							section: sections,
+							area: areas,
+							titleString: "CH 1",
+							unitString: "Volt",
+							threshold: 50,
+							lcdVisible: true
+		});
+		ch2_gauge = new steelseries.Radial('ch2_cvs', {
+							gaugeType: steelseries.GaugeType.TYPE4,
+							maxValue:0,
+							maxValue:10,
+							size: 201,
+							section: sections,
+							area: areas,
+							titleString: "CH 2",
+							unitString: "Volt",
+							threshold: 50,
+							lcdVisible: true
+		});
+		ch3_gauge = new steelseries.Radial('ch3_cvs', {
+							gaugeType: steelseries.GaugeType.TYPE4,
+							maxValue:0,
+							maxValue:10,
+							size: 201,
+							section: sections,
+							area: areas,
+							titleString: "CH 3",
+							unitString: "Volt",
+							threshold: 50,
+							lcdVisible: true
+		});
+
+	}
+</script>
+</body>
+</html>
