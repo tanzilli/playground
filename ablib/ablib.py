@@ -1133,6 +1133,29 @@ class Daisy19():
 		else:
 			return False
 
+class Daisy20():
+
+	"""
+	DAISY-20 (ADC module)
+	http://www.acmesystems.it/DAISY-20
+	"""
+	
+	maxvoltage=0
+	volt_per_point=0
+	adcpath="/sys/bus/platform/devices/at91_adc/"
+
+	def __init__(self,maxvoltage=10):
+		self.maxvoltage=maxvoltage	
+		self.volt_per_point=float(maxvoltage)/float(2**10)
+		return
+
+	def get(self,ch=0):
+		fd = open(self.adcpath + "chan" + str(ch),"r")
+		value = fd.read()
+		fd.close()
+		return(float(value)*self.volt_per_point)
+		
+
 class Daisy22():
 
 	"""
