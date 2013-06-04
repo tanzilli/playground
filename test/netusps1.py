@@ -1,16 +1,16 @@
 import ablib
 import time
 
-Out_1V0=0
-Out_1V8=1
-Out_3V25=2
-Out_3V3=3
+OUT_3V3=0
+OUT_3V25=1
+OUT_1V8=2
+OUT_1V0=3
 
 Shutdown=ablib.Daisy8(connector='D2',id='RL1')
-Alimentazione=ablib.Daisy8(connector='D2',id='RL0')
+VIN_5V=ablib.Daisy8(connector='D2',id='RL0')
 
 def adc(ch):
-	VREF=10.0
+	VREF=3.25
 	volt_per_point=VREF/(2**10)
 	path="/sys/bus/platform/devices/at91_adc/"
 
@@ -20,10 +20,17 @@ def adc(ch):
 	return int(sample)*volt_per_point
 
 def leggi():
-	print "    Out_1V0  %.2f" % adc(Out_1V0)
-	print "    Out_1V8  %.2f" % adc(Out_1V8)
-	print "    Out_3V25 %.2f" % adc(Out_3V25)
-	print "    Out_3V3  %.2f" % adc(Out_3V3)
+	print "%.2f %.2f %.2f %.2f " % (adc(OUT_3V3),adc(OUT_3V25),adc(OUT_1V8),adc(OUT_1V0))
+
+def message(linea1="",linea2=""):
+	lcd.clear()
+	lcd.putstring("%-16s" % linea1)
+	lcd.setcurpos(0,1)
+	lcd.putstring("%-16s" % linea2)
+	while (lcd.pressed(0) or lcd.pressed(1) or lcd.pressed(2) or lcd.pressed(3))==False:
+		pass
+	while(lcd.pressed(0) or lcd.pressed(1) or lcd.pressed(2) or lcd.pressed(3))==True:	
+		pass
 
 
 lcd = ablib.Daisy24(0)
@@ -31,67 +38,65 @@ lcd.backlighton()
 
 lcd.putstring("Test NETUSPS1")
 
-Alimentazione.off()
+VIN_5V.off()
 Shutdown.off()
 
 POK = ablib.Daisy8(connector='D2',id='IN0')
 
+counter_ok=0
 while True:
-	while True:
-		lcd.clear()
-		lcd.putstring("Press---------->")
-		while lcd.pressed(0)==False:
-			time.sleep(0.1)	
-		break	
-
-	print 
-	print("**************")
-	print("* START    ***")
-	print("**************")
-
-	Alimentazione.off()
+	VIN_5V.off()
 	Shutdown.off()
-	print("OFF")
-	for i in range (3):
-		print("  Wait 0.5 sec")
-		print "  Lettura: ",i
-		time.sleep(0.5)
-		leggi()
 
-	Alimentazione.on()
-	Shutdown.off()
-	print("ON")
-	for i in range (3):
-		print("  Wait 0.5 sec")
-		print "  Lettura: ",i
-		time.sleep(0.5)
-		leggi()
+	message("Insert NETUSPS1","Press any key")
 
-	Alimentazione.on()
-	Shutdown.on()
-	print("ON")
-	print("SHUTDOWN")
-	for i in range (3):
-		print("  Wait 0.5 sec")
-		print "  Lettura: ",i
-		time.sleep(0.5)
-		leggi()
+	#Controllo che tutte le tensioni siano a zero	
+	a=adc(OUT_3V25)
+	total_out = adc(OUT_3V3)+adc(OUT_3V25)+adc(OUT_1V8)+adc(OUT_1V0)
+	if total_out>0.2:
+		message("Errore:","OUT non 0V")
+		continue
 
-	Alimentazione.on()
-	Shutdown.off()
-	print("ON")
-	for i in range (3):
-		print("  Wait 0.5 sec")
-		print "  Lettura: ",i
-		time.sleep(0.5)
-		leggi()
+	#Accendo la VIN a 5 volt e controllo subito la 3V25
+	VIN_5V.on()
+	time.sleep(0.2)
+	a=adc(OUT_3V25)
+	a=adc(OUT_3V25)
+	if a<3.00:
+		message("Errore:","NO 3V25 %.2fv" % adc(OUT_3V25))
+		a=adc(OUT_3V25)
+		continue
 
-	print("OFF")
-	Alimentazione.off()
-	Shutdown.off()
-	for i in range (3):
-		print("  Wait 0.5 sec")
-		print "  Lettura: ",i
-		time.sleep(0.5)
-		leggi()
+	vcount=0
+	while adc(OUT_1V0)<1:
+		vcount=vcount+1;
+		if vcount>50:
+			break
+			
+	if vcount>52:
+		message("Timeout:","su 1V0 %.2fv" % adc(OUT_1V0))
+		print vcount
+		continue
+	print vcount
 
+	a=adc(OUT_1V8)
+	a=adc(OUT_1V8)
+	a=adc(OUT_1V8)
+	a=adc(OUT_1V8)
+	a=adc(OUT_1V8)
+	print a	
+	if a<1.8:
+		message("Errore:","NO 1V8 %.2fv" % a)
+		a=adc(OUT_1V8)	
+		continue
+
+	a=adc(OUT_3V3)		
+	a=adc(OUT_3V3)		
+	if a<3.24:
+		message("Errore:","NO 3V3 %.2fv" % adc(OUT_3V3))
+		a=adc(OUT_3V3)		
+		continue
+	
+	
+	counter_ok=counter_ok+1	
+	message("OK","%d" % counter_ok)
