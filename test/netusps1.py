@@ -22,13 +22,21 @@ def adc(ch):
 def leggi():
 	print "%.2f %.2f %.2f %.2f " % (adc(OUT_3V3),adc(OUT_3V25),adc(OUT_1V8),adc(OUT_1V0))
 
-def message(linea1="",linea2=""):
+def message(linea1="",linea2="",timeout=-1):
 	lcd.clear()
 	lcd.putstring("%-16s" % linea1)
 	lcd.setcurpos(0,1)
 	lcd.putstring("%-16s" % linea2)
+
+	if timeout>-1:
+		timeout=400*timeout	
+
 	while (lcd.pressed(0) or lcd.pressed(1) or lcd.pressed(2) or lcd.pressed(3))==False:
-		pass
+		if timeout>-1:
+			timeout=timeout-1	
+			if timeout==0:
+				return	
+
 	while(lcd.pressed(0) or lcd.pressed(1) or lcd.pressed(2) or lcd.pressed(3))==True:	
 		pass
 
@@ -37,6 +45,7 @@ lcd = ablib.Daisy24(0)
 lcd.backlighton()
 
 lcd.putstring("Test NETUSPS1")
+time.sleep(1)
 
 VIN_5V.off()
 Shutdown.off()
@@ -44,11 +53,12 @@ Shutdown.off()
 POK = ablib.Daisy8(connector='D2',id='IN0')
 
 counter_ok=0
+message_timeout=4
 while True:
 	VIN_5V.off()
 	Shutdown.off()
 
-	message("Insert NETUSPS1","Press any key")
+	message("Power OFF","Hit to start    ")
 
 	#Controllo che tutte le tensioni siano a zero	
 	a=adc(OUT_3V25)
@@ -63,7 +73,7 @@ while True:
 	a=adc(OUT_3V25)
 	a=adc(OUT_3V25)
 	if a<3.00:
-		message("Errore:","NO 3V25 %.2fv" % adc(OUT_3V25))
+		message("Errore:","NO 3V25 %.2fv" % adc(OUT_3V25),message_timeout)
 		a=adc(OUT_3V25)
 		continue
 
@@ -74,29 +84,24 @@ while True:
 			break
 			
 	if vcount>52:
-		message("Timeout:","su 1V0 %.2fv" % adc(OUT_1V0))
-		print vcount
+		message("Timeout:","su 1V0 %.2fv" % adc(OUT_1V0),message_timeout)
 		continue
-	print vcount
 
-	a=adc(OUT_1V8)
-	a=adc(OUT_1V8)
-	a=adc(OUT_1V8)
+	time.sleep(0.2)
 	a=adc(OUT_1V8)
 	a=adc(OUT_1V8)
 	print a	
 	if a<1.8:
-		message("Errore:","NO 1V8 %.2fv" % a)
+		message("Errore:","NO 1V8 %.2fv" % a,message_timeout)
 		a=adc(OUT_1V8)	
 		continue
 
 	a=adc(OUT_3V3)		
 	a=adc(OUT_3V3)		
 	if a<3.24:
-		message("Errore:","NO 3V3 %.2fv" % adc(OUT_3V3))
+		message("Errore:","NO 3V3 %.2fv" % adc(OUT_3V3),message_timeout)
 		a=adc(OUT_3V3)		
 		continue
 	
-	
 	counter_ok=counter_ok+1	
-	message("OK","%d" % counter_ok)
+	message("       OK       ","",message_timeout+1)
