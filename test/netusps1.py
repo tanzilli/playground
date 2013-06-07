@@ -10,7 +10,7 @@ Shutdown=ablib.Daisy8(connector='D2',id='RL1')
 VIN_5V=ablib.Daisy8(connector='D2',id='RL0')
 
 def adc(ch):
-	VREF=3.25
+	VREF=5.12
 	volt_per_point=VREF/(2**10)
 	path="/sys/bus/platform/devices/at91_adc/"
 
@@ -20,7 +20,13 @@ def adc(ch):
 	return int(sample)*volt_per_point
 
 def leggi():
-	print "%.2f %.2f %.2f %.2f " % (adc(OUT_3V3),adc(OUT_3V25),adc(OUT_1V8),adc(OUT_1V0))
+	while True:
+		a=adc(OUT_3V3)
+		print "%.1f %.1f %.1f %.1f " % (adc(OUT_3V3),adc(OUT_3V25),adc(OUT_1V8),adc(OUT_1V0))
+	
+def getinput():
+	rtc= "%.1f %.1f %.1f %.1f " % (adc(OUT_3V3),adc(OUT_3V25),adc(OUT_1V8),adc(OUT_1V0))
+	return rtc
 
 def message(linea1="",linea2="",timeout=-1):
 	lcd.clear()
@@ -58,50 +64,58 @@ while True:
 	VIN_5V.off()
 	Shutdown.off()
 
-	message("Power OFF","Hit to start    ")
+	message("Netus PS1","Press to run--->")
+	lcd.clear()
+	lcd.putstring("Wait...")
 
-	#Controllo che tutte le tensioni siano a zero	
-	a=adc(OUT_3V25)
-	total_out = adc(OUT_3V3)+adc(OUT_3V25)+adc(OUT_1V8)+adc(OUT_1V0)
-	if total_out>0.2:
-		message("Errore:","OUT non 0V")
-		continue
-
-	#Accendo la VIN a 5 volt e controllo subito la 3V25
+	#Accendo i 5 volt e controllo che le tensioni siano corrette
 	VIN_5V.on()
-	time.sleep(0.2)
-	a=adc(OUT_3V25)
-	a=adc(OUT_3V25)
-	if a<3.00:
-		message("Errore:","NO 3V25 %.2fv" % adc(OUT_3V25),message_timeout)
-		a=adc(OUT_3V25)
-		continue
+	time.sleep(1)
 
-	vcount=0
-	while adc(OUT_1V0)<1:
-		vcount=vcount+1;
-		if vcount>50:
-			break
-			
-	if vcount>52:
-		message("Timeout:","su 1V0 %.2fv" % adc(OUT_1V0),message_timeout)
-		continue
-
-	time.sleep(0.2)
-	a=adc(OUT_1V8)
-	a=adc(OUT_1V8)
-	print a	
-	if a<1.8:
-		message("Errore:","NO 1V8 %.2fv" % a,message_timeout)
-		a=adc(OUT_1V8)	
-		continue
-
-	a=adc(OUT_3V3)		
-	a=adc(OUT_3V3)		
-	if a<3.24:
-		message("Errore:","NO 3V3 %.2fv" % adc(OUT_3V3),message_timeout)
-		a=adc(OUT_3V3)		
+	a=adc(OUT_3V3) #La prima lettura a vuoto serve
+	line_3V3=adc(OUT_3V3)
+	line_3V25=adc(OUT_3V25)
+	line_1V8=adc(OUT_1V8)
+	line_1V0=adc(OUT_1V0)
+	
+	bad=False
+	if line_3V3<3.0 or line_3V3>3.5:
+		bad=True
+	if line_3V25<3.0 or line_3V25>3.4:
+		bad=True
+	if line_1V8<1.7 or line_1V8>1.9:
+		bad=True
+	if line_1V0<0.0 or line_1V0>1.1:
+		bad=True
+	
+	if bad:	
+		message("Errore:","%.1f %.1f %.1f %.1f " % (line_3V3,line_3V25,line_1V8,line_1V0),message_timeout)
 		continue
 	
-	counter_ok=counter_ok+1	
-	message("       OK       ","",message_timeout+1)
+	message("Accensione: OK  ",getinput(),message_timeout-2)
+	lcd.clear()
+	lcd.putstring("Wait...")
+	Shutdown.on()
+	time.sleep(1)
+
+	a=adc(OUT_3V3) #La prima lettura a vuoto serve
+	line_3V3=adc(OUT_3V3)
+	line_3V25=adc(OUT_3V25)
+	line_1V8=adc(OUT_1V8)
+	line_1V0=adc(OUT_1V0)
+	
+	bad=False
+	if line_3V3>0.1:
+		bad=True
+	if line_3V25<3.0 or line_3V25>3.4:
+		bad=True
+	if line_1V8>0.1:
+		bad=True
+	if line_1V0>0.1:
+		bad=True
+	
+	if bad:	
+		message("Errore:","%.1f %.1f %.1f %.1f " % (line_3V3,line_3V25,line_1V8,line_1V0),message_timeout)
+		continue
+
+	message("Shutdown: OK:","%.1f %.1f %.1f %.1f " % (line_3V3,line_3V25,line_1V8,line_1V0),message_timeout)
