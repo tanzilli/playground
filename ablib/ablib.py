@@ -732,6 +732,8 @@ class Daisy8():
 	http://www.acmesystems.it/DAISY-8
 	"""
 	kernel_id=-1
+	fd=None
+
 
 	line_first = {
 		'RL0' :  '2',
@@ -763,6 +765,10 @@ class Daisy8():
 			export(self.kernel_id)
 			direction(self.kernel_id,'in')
 
+			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+			if os.path.exists(iopath): 
+				self.fd = open(iopath + '/value','r')
+
 	def on(self):
 		if (self.kernel_id!=0):
 			set_value(self.kernel_id,1)
@@ -776,10 +782,39 @@ class Daisy8():
 			pass
 
 	def get(self):
-		if get_value(self.kernel_id):
-			return True
-		else:
-			return False
+		if self.fd!=None:
+			self.fd.seek(0)
+			a=self.fd.read()
+			if int(a)==0:
+				return False
+			else:
+				return True
+		return False
+
+#	def get(self):
+#		if get_value(self.kernel_id):
+#			return True
+#		else:
+#			return False
+			
+	def wait_edge(self,fd,callback):
+		counter=0	
+		po = select.epoll()
+		po.register(fd,select.EPOLLET)
+		while True:
+			events = po.poll()
+			if counter>0:	
+				callback()
+			counter=counter+1
+
+	def set_edge(self,value,callback):
+		if self.fd!=None:
+			set_edge(self.kernel_id,value)
+			thread.start_new_thread(self.wait_edge,(self.fd,callback))
+			return
+		else:		
+			thread.exit()
+			
 
 
 class Daisy10(Serial):
