@@ -1,7 +1,6 @@
 auto lo
 iface lo inet loopback
 
-auto eth0
 allow-hotplug eth0
 iface eth0 inet dhcp
 hwaddress ether 00:01:04:1b:2C:1F
