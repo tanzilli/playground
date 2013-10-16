@@ -1,10 +1,10 @@
-import ablib
-import time
+from time import sleep
+from ablib import Pin
 
-power_overrun = ablib.Pin('W','9','in')
+power_overrun = Pin('W9','INPUT')
 
 while True:
 	if power_overrun.get_value()==False:
 		print "Power overrun !";
-		time.sleep(1)
+		sleep(1)
 

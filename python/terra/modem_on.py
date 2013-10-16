@@ -1,13 +1,12 @@
-#!/usr/bin/python
-import time
-import ablib
+from time import sleep
+from ablib import Pin
  
 print "Modem ON"
  
-quectel_power = ablib.Pin('W','10','high')
-quectel_power_key = ablib.Pin('E','10','low')
+quectel_power = Pin('W10','HIGH')
+quectel_power_key = Pin('E10','LOW')
 
 quectel_power_key.on()
-time.sleep(1)
+sleep(1)
 quectel_power_key.off()
 
