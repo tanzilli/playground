@@ -1,10 +1,10 @@
 from ablib import Daisy8
 from time import sleep
 
-RL0_A = Daisy8('D11','RL0','first')
-RL1_A = Daisy8('D11','RL1','first')
-RL0_B = Daisy8('D11','RL0','second')
-RL1_B = Daisy8('D11','RL1','second')
+RL0_A = Daisy8('D11','first','RL0')
+RL1_A = Daisy8('D11','first','RL1')
+RL0_B = Daisy8('D11','second','RL0')
+RL1_B = Daisy8('D11','second','RL1')
  
 while True:
 	RL0_A.on()
