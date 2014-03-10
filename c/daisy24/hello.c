@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <string.h>
 
-
+// Display I2C address
 #define I2C_ADDR 0x3E
 
 // mode
