@@ -1,8 +1,9 @@
+// Updated for Kernel 3.x
+
 #include "sensirion.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 
 static int verbose = 0;
 static const char * version_str = "1.02 20090128";
@@ -19,28 +20,6 @@ void usage(void)
             "Test Sensirion SHT-71, CLK=(I)OG%d DATA=IOG%d\n", CLOCK_BIT,
             DATA_BIT);
 }
-
-
-#if 0
-	// Output loop example
-
-	gpioexport(85);
-	gpiosetdir(85,GPIO_OUT);
-	for (;;) {
-		gpiosetbits(85);
-		gpioclearbits(85);
-	}
-#endif
-
-#if 0
-	// Line input example
-
-	gpioexport(84);
-	for (;;) {
-		printf("%d\n",gpiogetbits(84));
-	}
-#endif
-
 
 // ----------
 // main code
@@ -96,13 +75,11 @@ int main(int argc, char ** argv)
 	sot = ReadTemperature();
 	if (verbose) fprintf(stderr, "soh=%d [0x%x]  sot=%d [0x%x]\n", soh, soh,  sot, sot);
 
-#if 1
 	// new formula from SHT7x version 4.1 datasheet
 	rel_humidity = -2.0468 + (0.0367 * soh) + (-1.5955E-6 * soh * soh);
-#else
+
 	// older formula
-	rel_humidity = -4 + (0.0405 * soh) + -2.8E-6;
-#endif
+	// rel_humidity = -4 + (0.0405 * soh) + -2.8E-6;
 
 	if (rel_humidity > 99.9)
 		rel_humidity = 100.0;
@@ -133,8 +110,11 @@ int gpiosetdir(int gpioid,int mode)
 {
 	FILE *filestream;
 	char filename[50];
+	char gpioname[10];
+	
+	gpioid2sysname(gpioid,gpioname);
 
-	sprintf(filename,"/sys/class/gpio/gpio%d/direction",gpioid);
+	sprintf(filename,"/sys/class/gpio/%s/direction",gpioname);
 	if ((filestream=fopen(filename,"w"))==NULL) {
 		printf("Error on direction setup\n");
 		return -1;
@@ -153,10 +133,13 @@ int gpiogetbits(int gpioid)
 	FILE *filestream;
 	char filename[50];
 	char retchar;
+	char gpioname[10];
+	
+	gpioid2sysname(gpioid,gpioname);
 
-	sprintf(filename,"/sys/class/gpio/gpio%d/value",gpioid);
+	sprintf(filename,"/sys/class/gpio/%s/value",gpioname);
 	if ((filestream=fopen(filename,"r"))==NULL) {
-		printf("Error on gpiogetbits %d\n",gpioid);
+		printf("Error on gpiogetbits %s\n",gpioname);
 		return -1;
 	}	
 	retchar=fgetc(filestream);
@@ -169,10 +152,13 @@ int gpiosetbits(int gpioid)
 {
 	FILE *filestream;
 	char filename[50];
+	char gpioname[10];
 
-	sprintf(filename,"/sys/class/gpio/gpio%d/value",gpioid);
+	gpioid2sysname(gpioid,gpioname);
+
+	sprintf(filename,"/sys/class/gpio/%s/value",gpioname);
 	if ((filestream=fopen(filename,"w"))==NULL) {
-		printf("Error on setbits %d\n",gpioid);
+		printf("Error on setbits %s\n",gpioname);
 		return -1;
 	}	
 	fprintf(filestream,"1");
@@ -184,10 +170,14 @@ int gpioclearbits(int gpioid)
 {
 	FILE *filestream;
 	char filename[50];
+	char gpioname[10];
 
-	sprintf(filename,"/sys/class/gpio/gpio%d/value",gpioid);
+	gpioid2sysname(gpioid,gpioname);
+
+
+	sprintf(filename,"/sys/class/gpio/%s/value",gpioname);
 	if ((filestream=fopen(filename,"w"))==NULL) {
-		printf("Error on clearbits %d\n",gpioid);
+		printf("Error on clearbits %s\n",gpioname);
 		return -1;
 	}	
 	fprintf(filestream,"0");
@@ -320,5 +310,21 @@ static int ReadHumidity(void)
 	return((Msb<<8)+Lsb);
 }
   
+int gpioid2sysname(int gpioid,char *sysname) {
+	if (gpioid>=0 && gpioid<32) {
+		sprintf(sysname,"pioA%d",gpioid);
+		return 1;
+	}
+	if (gpioid>=32 && gpioid<64) {
+		sprintf(sysname,"pioB%d",gpioid-32);
+		return 1;
+	}
+	if (gpioid>=64 && gpioid<96) {
+		sprintf(sysname,"pioC%d",gpioid-64);
+		return 1;
+	}
+	return 0;
+}
+
 
 
