@@ -3,6 +3,10 @@ import ablib
 import serial
 import re
 
+enabled_numbers = {
+	'+391234567890':'Mario Rossi',
+}
+
 def getIncomingCall(ser):
 	while True:
 		for line in ser.readlines():
@@ -11,6 +15,16 @@ def getIncomingCall(ser):
 				if m:
 					found = m.group(1)
 					return found
+
+def authorized_log(name):
+	out_file = open("authorized.log","a")
+	out_file.write(name + "\n")
+	out_file.close()
+
+def unauthorized_log(number):
+	out_file = open("unauthorized.log","a")
+	out_file.write(number + "\n")
+	out_file.close()
  
 ser = serial.Serial(
 	port='/dev/ttyS1', 
@@ -21,6 +35,8 @@ ser = serial.Serial(
 	bytesize=serial.EIGHTBITS
 )
 
+gate = ablib.Daisy8('D11','first','RL0')
+
 while True:
 	#Check if the modem is on
 	quectel_STATUS = ablib.Pin('N6','INPUT')
@@ -30,10 +46,8 @@ while True:
 		break
 	else: 	
 		print "Turn ON the modem"
-	 
 		quectel_power = ablib.Pin('W10','HIGH')
 		quectel_power_key = ablib.Pin('E10','LOW')
-
 		quectel_power_key.on()
 		sleep(1)
 		quectel_power_key.off()
@@ -50,4 +64,18 @@ while True:
 
 while True:
 	print "Check for incoming calling"
-	print getIncomingCall(ser)
+	incoming=getIncomingCall(ser)	
+	
+	#Look for an enabled number
+	try:
+		print enabled_numbers[incoming]
+		ser.write("ATH\r")
+		gate.on()
+		sleep(1)
+		gate.off()
+		authorized_log(enabled_numbers[incoming])
+		
+	except:	
+		print "Unknow---->",incoming
+		unauthorized_log(incoming)
+		ser.write("ATH\r")
