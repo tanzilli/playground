@@ -4,15 +4,7 @@ import serial
 import re
 
 enabled_numbers = {
-	'+393460624304':'Roberto Asquini',
-	'+393460624344':'Sergio Tanzilli',
-	'+393346203529':'Daniela Necci',
-	'+393204460760':'Ennio Negri',
-	'+393471018208':'Tiziana Di Laurenzio',
-	'+393358724296':'Emanuele Lauria',
-	'+393477963828':'Nicola Pye',
-	'+393498240562':'Meti Tanzilli',
-	'+393897868293':'Andrea Ancora',
+	'+39123456789':'Mario Rossi',
 }
 
 def getIncomingCall(ser):
