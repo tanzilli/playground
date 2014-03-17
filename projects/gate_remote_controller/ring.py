@@ -4,12 +4,21 @@ import serial
 import re
 
 enabled_numbers = {
-	'+391234567890':'Mario Rossi',
+	'+393460624304':'Roberto Asquini',
+	'+393460624344':'Sergio Tanzilli',
+	'+393346203529':'Daniela Necci',
+	'+393204460760':'Ennio Negri',
+	'+393471018208':'Tiziana Di Laurenzio',
+	'+393358724296':'Emanuele Lauria',
+	'+393477963828':'Nicola Pye',
+	'+393498240562':'Meti Tanzilli',
+	'+393897868293':'Andrea Ancora',
 }
 
 def getIncomingCall(ser):
 	while True:
 		for line in ser.readlines():
+			print line
 			if line.find("+CLIP")>=0:
 				m = re.search('"(.+?)"',line)
 				if m:
@@ -35,7 +44,7 @@ ser = serial.Serial(
 	bytesize=serial.EIGHTBITS
 )
 
-gate = ablib.Daisy8('D11','first','RL0')
+gate = ablib.Daisy8('D11','first','RL1')
 
 while True:
 	#Check if the modem is on
@@ -58,6 +67,11 @@ ser.flushOutput()
 print "Wait for a modem reply on serial line"
 while True:
 	ser.write("ATE0\r")
+	rtc=ser.readlines()
+	if "OK\r\n" in rtc:
+		break
+
+	ser.write("AT+CLIP=1\r")
 	rtc=ser.readlines()
 	if "OK\r\n" in rtc:
 		break
