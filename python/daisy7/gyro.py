@@ -6,7 +6,6 @@
 
 import smbus
 import time
-import string
 
 l3g4200d_register = {
 	'WHO_AM_I'			:	0x0F,
@@ -47,11 +46,11 @@ def getSignedNumber(number):
 i2c_bus=smbus.SMBus(0)
 i2c_address=0x68
 
-print "Registers read from the gyroscope chip"
+print "Read the L3G4200D gyroscope chip"
 
-#initialise the L3G4200D
+#Chip setup
 
-#Normal mode and all axis on to control REG1
+#Chip in Normal mode. Turn on all axis
 i2c_bus.write_byte_data(i2c_address,l3g4200d_register['CTRL_REG1'],0x0F)
 
 #Full 2000dps to control REG4
