@@ -3,7 +3,7 @@
 import serial
 import sys
 
-serialdevice = "/dev/ttyS2"
+serialdevice = "/dev/ttyS4"
 
 #Open the serial port 
 ser = serial.Serial(
