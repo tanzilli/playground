@@ -29,26 +29,30 @@ curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_BLACK)
 stdscr.bkgd(curses.color_pair(1)) 
 stdscr.refresh() 
 
-wincmd = curses.newwin(30, 50, 1, 1) 
-wincmd.bkgd(curses.color_pair(2)) 
-wincmd.box() 
+winacc = curses.newwin(8, 20, 1, 1) 
+winacc.bkgd(curses.color_pair(2)) 
+winacc.addstr(1, 2, "Accellerometer") 
+winacc.box() 
+
+wingyro = curses.newwin(8, 20, 1, 22) 
+wingyro.bkgd(curses.color_pair(2)) 
+wingyro.addstr(1, 2, "Gyroscope") 
+wingyro.box() 
 
 while True:
 	acc=mems.acc_read()
-	acc_row=2
-	
-	wincmd.addstr(acc_row+0, 2, "X: %6d" % (acc["X"])) 
-	wincmd.addstr(acc_row+1, 2, "Y: %6d" % (acc["Y"])) 
-	wincmd.addstr(acc_row+2, 2, "Z: %6d" % (acc["Z"])) 
-	
 	gyro=mems.gyro_read()
-	gyro_row=acc_row+4
-	
-	wincmd.addstr(gyro_row+0, 2, "X: %6d" % (gyro["X"])) 
-	wincmd.addstr(gyro_row+1, 2, "Y: %6d" % (gyro["Y"])) 
-	wincmd.addstr(gyro_row+2, 2, "Z: %6d" % (gyro["Z"])) 
 
-	wincmd.refresh() 
+	winacc.addstr(3, 2, "X: %6d" % (acc["X"])) 
+	winacc.addstr(4, 2, "Y: %6d" % (acc["Y"])) 
+	winacc.addstr(5, 2, "Z: %6d" % (acc["Z"])) 
+	
+	wingyro.addstr(3, 2, "X: %6d" % (gyro["X"])) 
+	wingyro.addstr(4, 2, "Y: %6d" % (gyro["Y"])) 
+	wingyro.addstr(5, 2, "Z: %6d" % (gyro["Z"])) 
+
+	winacc.refresh() 
+	wingyro.refresh() 
 	time.sleep(0.1)
 
 cleanup()
