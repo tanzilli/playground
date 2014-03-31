@@ -1,17 +1,11 @@
-#!/usr/bin/python
+from time import sleep
+from ablib import Daisy7
 
-#BAROMETER (PRESSURE SENSOR)
-#Read the internal registers
+memsgps = Daisy7("D10")
+while True:
+	print "Temperature: %.2f C" % memsgps.baro_getTemperature()
+	print "   Pressure: %.2f hPa" % (memsgps.baro_getPressure()/100.0)
+	print "   Altitude: %.2f" % memsgps.baro_getAltitude()
+	print ""
 
-import smbus
-
-i2c_bus=smbus.SMBus(0)
-i2c_address=0x77
-
-print "Registers read from the barometer chip"
-
-for i in range(0xAA,0xBF+1):
-	i2c_bus.write_byte(i2c_address,i)		
-	print "0x%03d = %d " % (i,i2c_bus.read_byte(i2c_address))
-
-
+	sleep(0.5)
